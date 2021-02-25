@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
-
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class AddReqProduct extends Component {
   state = {
     products: [],
     brands: [],
-    categories: [],
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/ProductRequest", {
+    fetch("http://sndwebapi.spikotech.com/api/ProductRequest", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -20,29 +20,27 @@ class AddReqProduct extends Component {
         productRequestId: null,
         productId: event.target.productId.value,
         brandId: event.target.brandId.value,
-        categoryId: event.target.categoryId.value,
         requestedQuantity: event.target.requestedQuantity.value,
       }),
     })
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
 
   componentDidMount = () => {
     this.Products();
-    this.Categories();
     this.Brands();
   };
 
   Products = () => {
-    fetch("https://localhost:44331/api/Product")
+    fetch("http://sndwebapi.spikotech.com/api/Product")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ products: data });
@@ -50,32 +48,19 @@ class AddReqProduct extends Component {
   };
 
   Brands = () => {
-    fetch("https://localhost:44331/api/Brand")
+    fetch("http://sndwebapi.spikotech.com/api/Brand")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ brands: data });
       });
   };
 
-  Categories = () => {
-    fetch("https://localhost:44331/api/Categories")
-      .then((Response) => Response.json())
-      .then((data) => {
-        this.setState({ categories: data });
-      });
-  };
-
-  componentDidUpdate = () => {
-    this.Products();
-    this.Categories();
-    this.Brands();
-  };
-
   render() {
-    const { products, brands, categories } = this.state;
+    const { products, brands } = this.state;
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div class="container-fluid mt-5">
           <div class="row mb-5">
             <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -87,7 +72,7 @@ class AddReqProduct extends Component {
                     className="btn btn-success btn-md"
                     to="/requestproduct"
                   >
-                    Requested Products
+                    Purchased Products
                   </Link>
                   <form className="mt-5" onSubmit={this.handleSubmit}>
                     <div className="form-group mt-2">
@@ -95,6 +80,7 @@ class AddReqProduct extends Component {
                       <select
                         className="form-control border border-dark"
                         name="productId"
+                        autoFocus
                       >
                         <option>--Select Product--</option>
                         {products.map((product) => (
@@ -117,22 +103,6 @@ class AddReqProduct extends Component {
                         {brands.map((brand) => (
                           <option key={brand.brandId} value={brand.brandId}>
                             {brand.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="form-group mt-2">
-                      <label className="font-weight-bold">
-                        Product Category
-                      </label>
-                      <select
-                        class="form-control border border-dark"
-                        name="categoryId"
-                      >
-                        <option>--Select Category--</option>
-                        {categories.map((cat) => (
-                          <option key={cat.categoryId} value={cat.categoryId}>
-                            {cat.name}
                           </option>
                         ))}
                       </select>

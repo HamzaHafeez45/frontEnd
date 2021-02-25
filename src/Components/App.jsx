@@ -7,6 +7,7 @@ import Main from "../Components/Main";
 import Card from "../Components/Card";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle";
+import "../../node_modules/react-toastify/dist/ReactToastify.css";
 import Dashboard from "../Components/Dashboard";
 import Distributions from "../Components/Distributions";
 import AddDistributions from "../Components/AddDistribution";
@@ -34,6 +35,8 @@ import Stock from "../Components/Stock";
 import AddStock from "../Components/AddStock";
 import Order from "../Components/Order";
 import AddOrder from "../Components/AddOrder";
+import Expenses from "./Expenses";
+import AddExpenses from "./AddExpenses";
 
 const App = () => {
   return (
@@ -44,7 +47,6 @@ const App = () => {
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/main" component={Main} />
         <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/card" component={Card} />
         <Route exact path="/distributions" component={Distributions} />
         <Route exact path="/addDistributions" component={AddDistributions} />
         <Route exact path="/addCategories" component={AddCategories} />
@@ -71,6 +73,8 @@ const App = () => {
         <Route exact path="/stock" component={Stock} />
         <Route exact path="/addOrder" component={AddOrder} />
         <Route exact path="/order" component={Order} />
+        <Route exact path="/expenses" component={Expenses} />
+        <Route exact path="/addExpense" component={AddExpenses} />
         <Redirect to="/" />
         <Home />
       </Switch>

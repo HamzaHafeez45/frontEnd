@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class EditWarehouse extends Component {
   state = {
@@ -7,7 +9,7 @@ class EditWarehouse extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/warehouse", {
+    fetch("http://sndwebapi.spikotech.com/api/warehouse", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -22,16 +24,16 @@ class EditWarehouse extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
 
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/Distribution")
+    fetch("http://sndwebapi.spikotech.com/api/Distribution")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ distributions: data });
@@ -42,6 +44,7 @@ class EditWarehouse extends Component {
     const { distributions } = this.state;
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editWarehouseexampleModalCenter"

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class EditStock extends Component {
   state = {
     products: [],
@@ -7,7 +8,7 @@ class EditStock extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Stock", {
+    fetch("http://sndwebapi.spikotech.com/api/Stock", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -23,10 +24,10 @@ class EditStock extends Component {
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -36,7 +37,7 @@ class EditStock extends Component {
   };
 
   Products = () => {
-    fetch("https://localhost:44331/api/Product")
+    fetch("http://sndwebapi.spikotech.com/api/Product")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ products: data });
@@ -44,7 +45,7 @@ class EditStock extends Component {
   };
 
   Warehouses = () => {
-    fetch("https://localhost:44331/api/warehouse")
+    fetch("http://sndwebapi.spikotech.com/api/warehouse")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ warehouses: data });
@@ -55,6 +56,7 @@ class EditStock extends Component {
     const { products, warehouses } = this.state;
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editStockexampleModalCenter"

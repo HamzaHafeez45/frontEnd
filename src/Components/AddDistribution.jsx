@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class AddDistribution extends Component {
   state = {
     cities: [],
@@ -8,7 +10,7 @@ class AddDistribution extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Distribution", {
+    fetch("http://sndwebapi.spikotech.com/api/Distribution", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -28,10 +30,10 @@ class AddDistribution extends Component {
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -41,16 +43,15 @@ class AddDistribution extends Component {
   };
 
   Cities = () => {
-    fetch("https://localhost:44331/api/City")
+    fetch("http://sndwebapi.spikotech.com/api/City")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ cities: data });
-        console.log(data);
       });
   };
 
   Categories = () => {
-    fetch("https://localhost:44331/api/Categories")
+    fetch("http://sndwebapi.spikotech.com/api/Categories")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ categories: data });
@@ -66,6 +67,7 @@ class AddDistribution extends Component {
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div className="container-fluid mt-5">
           <div className="row mb-5">
             <div className="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -92,6 +94,7 @@ class AddDistribution extends Component {
                           className="form-control border border-dark"
                           placeholder="Enter distribution name"
                           required
+                          autoFocus
                         />
                       </div>
 

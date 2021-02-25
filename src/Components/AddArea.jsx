@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class AddArea extends Component {
   state = {
     cities: [],
@@ -8,7 +10,7 @@ class AddArea extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Area", {
+    fetch("http://sndwebapi.spikotech.com/api/Area", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -23,34 +25,28 @@ class AddArea extends Component {
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
 
   componentDidMount = () => {
-    this.refreshList();
-  };
-  refreshList = () => {
-    fetch("https://localhost:44331/api/City")
+    fetch("http://sndwebapi.spikotech.com/api/City")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ cities: data });
-        console.log(data);
       });
   };
 
-  componentDidUpdate = () => {
-    this.refreshList();
-  };
   render() {
     const { cities } = this.state;
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div className="container-fluid mt-5">
           <div className="row mb-5">
             <div className="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -69,6 +65,7 @@ class AddArea extends Component {
                         className="form-control border border-dark"
                         placeholder="Enter area name"
                         required
+                        autoFocus
                       />
                     </div>
                     <div className="form-group mt-2">

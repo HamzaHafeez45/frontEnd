@@ -1,18 +1,20 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditDistribution from "../Components/EditDistribution";
-
+import EditDistribution from "./EditDistribution";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
 class ShowDistributions extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     distributions: [],
     EditDistributionShow: false,
+    searchQuery: "",
   };
 
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/Distribution")
+    fetch("http://sndwebapi.spikotech.com/api/Distribution")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ distributions: data });
@@ -21,7 +23,7 @@ class ShowDistributions extends Component {
 
   DeleteDistribution = (id) => {
     if (window.confirm("Are you sure?" + id)) {
-      fetch("https://localhost:44331/api/Distribution/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/Distribution/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -31,10 +33,10 @@ class ShowDistributions extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -42,6 +44,9 @@ class ShowDistributions extends Component {
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
+  };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
   };
   render() {
     const {
@@ -53,24 +58,29 @@ class ShowDistributions extends Component {
       distributorEmail,
       distributorCnic,
       distributorPhone,
+      pageSize,
+      currentPage,
+      distributions: allDistributions,
+      searchQuery,
     } = this.state;
 
     const { length: count } = this.state.distributions;
 
-    const {
-      pageSize,
-      currentPage,
-      distributions: allDistributions,
-    } = this.state;
-
-    const Distributions = paginate(allDistributions, currentPage, pageSize);
+    let filtered = allDistributions;
+    if (searchQuery)
+      filtered = allDistributions.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Distributions = paginate(filtered, currentPage, pageSize);
     return (
       <>
-        <table className="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table className="table table-striped bg-light text-center mt-4">
           <thead>
             <tr className="text-muted">
-              <th>DistributionID</th>
-              <th>Distribution Name</th>
+              <th>Id</th>
+              <th> Name</th>
               <th>Category</th>
               <th>City</th>
               <th>Owner Name</th>

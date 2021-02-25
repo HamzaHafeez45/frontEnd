@@ -28,7 +28,7 @@ const Home = () => {
                     for managing your data.
                   </h2>
                   <div className="mt-3">
-                    <NavLink to="/signup" className="btn-get-started">
+                    <NavLink to="/dashboard" className="btn-get-started">
                       Get Started
                     </NavLink>
                   </div>

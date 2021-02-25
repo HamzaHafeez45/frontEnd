@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditArea from "../Components/EditArea";
-
+import EditArea from "./EditArea";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
 class ShowAreas extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     areas: [],
     EditAreaShow: false,
+    searchQuery: "",
   };
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/Area")
+    fetch("http://sndwebapi.spikotech.com/api/Area")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ areas: data });
@@ -20,7 +22,7 @@ class ShowAreas extends Component {
 
   DeleteArea = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/Area/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/Area/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -30,10 +32,10 @@ class ShowAreas extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -42,15 +44,32 @@ class ShowAreas extends Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
+  };
   render() {
-    const { areaId, name, name1 } = this.state;
+    const {
+      areaId,
+      name,
+      name1,
+      pageSize,
+      currentPage,
+      areas: allAreas,
+      searchQuery,
+    } = this.state;
 
     const { length: count } = this.state.areas;
-    const { pageSize, currentPage, areas: allAreas } = this.state;
-    const Areas = paginate(allAreas, currentPage, pageSize);
+    let filtered = allAreas;
+    if (searchQuery)
+      filtered = allAreas.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Areas = paginate(filtered, currentPage, pageSize);
 
     return (
       <>
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
         <table class="table table-striped bg-light text-center">
           <thead>
             <tr class="text-muted">

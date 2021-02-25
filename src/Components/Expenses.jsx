@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import ShowReqProducts from "../Components/ShowReqProducts";
 import Nav from "../Components/Nav";
-class ReqProducts extends Component {
+import ShowExpenses from "./ShowExpenses";
+
+class Expenses extends Component {
   render() {
     return (
       <>
@@ -13,14 +14,12 @@ class ReqProducts extends Component {
               <div className="col-xl-10 col-lg-9 col-md-8 ml-auto">
                 <Link
                   className="btn btn-md btn-success float-right"
-                  to="/addReqProduct"
+                  to="/addExpense"
                 >
-                  Purchased Products
+                  Add Expense
                 </Link>
-                <h3 className="text-muted text-center mb-3 mt-5">
-                  Purchased Products
-                </h3>
-                <ShowReqProducts />
+                <h3 className="text-muted text-center mb-3 mt-5">Expenses</h3>
+                <ShowExpenses />
               </div>
             </div>
           </div>
@@ -30,4 +29,4 @@ class ReqProducts extends Component {
   }
 }
 
-export default ReqProducts;
+export default Expenses;

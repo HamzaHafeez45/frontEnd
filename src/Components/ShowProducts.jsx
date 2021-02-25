@@ -1,17 +1,20 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditProduct from "../Components/EditProduct";
+import EditProduct from "./EditProduct";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
 
 class ShowProducts extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     products: [],
     EditProductShow: false,
+    searchQuery: "",
   };
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/Product")
+    fetch("http://sndwebapi.spikotech.com/api/Product")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ products: data });
@@ -20,7 +23,7 @@ class ShowProducts extends Component {
 
   DeleteProduct = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/Product/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/Product/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -30,10 +33,10 @@ class ShowProducts extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -41,6 +44,9 @@ class ShowProducts extends Component {
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
+  };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
   };
   render() {
     const {
@@ -50,24 +56,32 @@ class ShowProducts extends Component {
       productPrice,
       expireable,
       name1,
-      name2,
+      unit,
+      searchQuery,
     } = this.state;
-
     const { length: count } = this.state.products;
     const { pageSize, currentPage, products: allProducts } = this.state;
-    const Products = paginate(allProducts, currentPage, pageSize);
+    let filtered = allProducts;
+    if (searchQuery)
+      filtered = allProducts.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Products = paginate(filtered, currentPage, pageSize);
     return (
       <>
-        <table className="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table className="table table-responsive table-striped bg-light text-center mt-4">
           <thead>
             <tr class="text-muted">
-              <th>Product ID</th>
-              <th>Product Name</th>
-              <th>Product Code</th>
-              <th>Product Price</th>
-              <th>Product Expireable</th>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Code</th>
+              <th>Cost</th>
+              <th>Price</th>
+              <th>Expireable</th>
               <th>Brand</th>
-              <th>Product Category</th>
+              <th>Unit</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>
@@ -78,11 +92,11 @@ class ShowProducts extends Component {
                 <td>{product.productId}</td>
                 <td>{product.name}</td>
                 <td>{product.productCode}</td>
-
+                <td>{product.productCost}</td>
                 <td>{product.productPrice}</td>
                 <td>{product.expireable}</td>
                 <td>{product.name1}</td>
-                <td>{product.name2}</td>
+                <td>{product.unit}</td>
                 <td>
                   <button
                     className="btn btn-warning btn-sm"
@@ -97,7 +111,7 @@ class ShowProducts extends Component {
                         productPrice: product.productPrice,
                         expireable: product.expireable,
                         name1: product.name1,
-                        name2: product.name2,
+                        unit: product.unit,
                       })
                     }
                   >
@@ -132,7 +146,7 @@ class ShowProducts extends Component {
           productPrice={productPrice}
           expireable={expireable}
           name1={name1}
-          name2={name2}
+          unit={unit}
         />
       </>
     );

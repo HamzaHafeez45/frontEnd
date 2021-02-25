@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class AddBrand extends Component {
+  state = {
+    categories: [],
+  };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Brand", {
+    fetch("http://sndwebapi.spikotech.com/api/Brand", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -13,22 +18,32 @@ class AddBrand extends Component {
       body: JSON.stringify({
         brandId: null,
         name: event.target.name.value,
+        categoryId: event.target.categoryId.value,
       }),
     })
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
+  componentDidMount = () => {
+    fetch("http://sndwebapi.spikotech.com/api/Categories")
+      .then((Response) => Response.json())
+      .then((data) => {
+        this.setState({ categories: data });
+      });
+  };
   render() {
+    const { categories } = this.state;
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div className="container-fluid mt-5">
           <div className="row mb-5">
             <div className="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -47,7 +62,25 @@ class AddBrand extends Component {
                         className="form-control border border-dark"
                         placeholder="Enter brand name"
                         required
+                        autoFocus
                       />
+                    </div>
+                    <div className="form-group mt-2">
+                      <label className="font-weight-bold">Category</label>
+                      <select
+                        class="form-control border border-dark"
+                        name="categoryId"
+                      >
+                        <option>--Select Category--</option>
+                        {categories.map((category) => (
+                          <option
+                            key={category.categoryId}
+                            value={category.categoryId}
+                          >
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <button
                       type="submit"

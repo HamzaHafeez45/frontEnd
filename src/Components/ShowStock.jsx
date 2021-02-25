@@ -1,28 +1,30 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditStock from "../Components/EditStock";
+import EditStock from "./EditStock";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
 
 class ShowRoutes extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     stock: [],
     EditStockShow: false,
+    searchQuery: "",
   };
 
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/Stock")
+    fetch("http://sndwebapi.spikotech.com/api/Stock")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ stock: data });
-        console.table(data);
       });
   };
 
   DeleteStock = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/Stock/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/Stock/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -32,10 +34,10 @@ class ShowRoutes extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -44,23 +46,31 @@ class ShowRoutes extends Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
+  };
+
   render() {
-    const { stockId, name, productQuantity, name1 } = this.state;
-
+    const { stockId, name, productQuantity, name1, searchQuery } = this.state;
     const { length: count } = this.state.stock;
-
     const { pageSize, currentPage, stock: allStock } = this.state;
-
-    const Stock = paginate(allStock, currentPage, pageSize);
+    let filtered = allStock;
+    if (searchQuery)
+      filtered = allStock.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Stock = paginate(filtered, currentPage, pageSize);
     return (
       <>
-        <table class="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table class="table table-striped bg-light text-center mt-4">
           <thead>
             <tr class="text-muted">
               <th>Stock ID</th>
-              <th>Product Name</th>
-              <th>Product Quantity</th>
-              <th>Stock Price</th>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
               <th>Warehouse</th>
               <th>Edit</th>
               <th>Delete</th>

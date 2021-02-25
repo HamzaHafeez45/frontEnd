@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class AddCity extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/City", {
+    fetch("http://sndwebapi.spikotech.com/api/City", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -18,10 +20,10 @@ class AddCity extends Component {
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -29,6 +31,7 @@ class AddCity extends Component {
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div class="container-fluid mt-5">
           <div class="row mb-5">
             <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -47,6 +50,7 @@ class AddCity extends Component {
                         className="form-control border border-dark"
                         placeholder="Enter city name"
                         required
+                        autoFocus
                       />
                     </div>
                     <button

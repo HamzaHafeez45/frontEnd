@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class EditRoute extends Component {
   state = {
@@ -7,7 +9,7 @@ class EditRoute extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Route", {
+    fetch("http://sndwebapi.spikotech.com/api/Route", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -23,10 +25,10 @@ class EditRoute extends Component {
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -35,14 +37,14 @@ class EditRoute extends Component {
     this.refreshList1();
   };
   refreshList = () => {
-    fetch("https://localhost:44331/api/City")
+    fetch("http://sndwebapi.spikotech.com/api/City")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ cities: data });
       });
   };
   refreshList1 = () => {
-    fetch("https://localhost:44331/api/Area")
+    fetch("http://sndwebapi.spikotech.com/api/Area")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ areas: data });

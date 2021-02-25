@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class EditProduct extends Component {
   state = {
     brands: [],
-    categories: [],
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Product", {
+    fetch("http://sndwebapi.spikotech.com/api/Product", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -21,45 +22,33 @@ class EditProduct extends Component {
         productPrice: event.target.productPrice.value,
         expireable: event.target.expireable.value,
         brandId: event.target.name1.value,
-        categoryId: event.target.name2.value,
+        unit: event.target.unit.value,
       }),
     })
       .then((res) => res.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
 
   componentDidMount = () => {
-    this.Categories();
-    this.Brands();
-  };
-
-  Brands = () => {
-    fetch("https://localhost:44331/api/Brand")
+    fetch("http://sndwebapi.spikotech.com/api/Brand")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ brands: data });
       });
   };
 
-  Categories = () => {
-    fetch("https://localhost:44331/api/Categories")
-      .then((Response) => Response.json())
-      .then((data) => {
-        this.setState({ categories: data });
-      });
-  };
-
   render() {
-    const { brands, categories } = this.state;
+    const { brands } = this.state;
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editProductexampleModalCenter"
@@ -159,19 +148,15 @@ class EditProduct extends Component {
                     </select>
                   </div>
                   <div className="form-group mt-2">
-                    <label className="font-weight-bold">Product Category</label>
-                    <select
-                      class="form-control border border-dark"
-                      name="name2"
-                      defaultValue={this.props.name2}
-                    >
-                      <option>--Select Category--</option>
-                      {categories.map((cat) => (
-                        <option key={cat.categoryId} value={cat.categoryId}>
-                          {cat.name}
-                        </option>
-                      ))}
-                    </select>
+                    <label className="font-weight-bold">Product Unit</label>
+                    <input
+                      type="text"
+                      name="unit"
+                      className="form-control border border-dark"
+                      placeholder="Enter Product unit"
+                      required
+                      defaultValue={this.props.unit}
+                    />
                   </div>
                   <button
                     type="submit"

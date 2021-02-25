@@ -1,18 +1,20 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditCategory from "../Components/EditCategory";
-
+import EditCategory from "./EditCategory";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
 class ShowCategories extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     categories: [],
     EditCategoryShow: false,
+    searchQuery: "",
   };
 
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/Categories")
+    fetch("http://sndwebapi.spikotech.com/api/categories")
       .then((Response) => Response.json())
       .then((categories) => {
         this.setState({ categories });
@@ -21,7 +23,7 @@ class ShowCategories extends Component {
 
   DeleteCategory = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/Categories/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/categories/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -31,10 +33,10 @@ class ShowCategories extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -43,21 +45,36 @@ class ShowCategories extends Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
+  };
   render() {
-    const { categoryId, name } = this.state;
-
+    const {
+      categoryId,
+      name,
+      pageSize,
+      currentPage,
+      categories: allCategories,
+      searchQuery,
+    } = this.state;
     const { length: count } = this.state.categories;
 
-    const { pageSize, currentPage, categories: allCategories } = this.state;
+    let filtered = allCategories;
+    if (searchQuery)
+      filtered = allCategories.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
 
-    const Categories = paginate(allCategories, currentPage, pageSize);
+    const Categories = paginate(filtered, currentPage, pageSize);
     return (
       <>
-        <table className="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table className="table table-striped bg-light text-center mt-4">
           <thead>
             <tr className="text-muted">
-              <th>categoryId</th>
-              <th>Category Name</th>
+              <th>Id</th>
+              <th>Name</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>

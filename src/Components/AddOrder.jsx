@@ -2,18 +2,24 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
 import Pagination from "../Components/Pagination";
+import SearchBox from "../Components/SearchBox";
 import { paginate } from "../utils/Pagination";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class AddOrder extends Component {
   state = {
     products: [],
     quantity: 0,
     orderedProducts: [],
-    pageSize: 4,
+    cartProducts: [],
+    pageSize: 7,
     currentPage: 1,
     shops: [],
     agents: [],
-    totalAmmount: "",
+    totalAmount: 0,
+    totalProfit: 0,
+    searchQuery: "",
   };
 
   componentDidMount = () => {
@@ -23,31 +29,27 @@ class AddOrder extends Component {
   };
 
   agents = () => {
-    fetch("https://localhost:44331/api/agent")
+    fetch("http://sndwebapi.spikotech.com/api/agent")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ agents: data });
       });
   };
   shops = () => {
-    fetch("https://localhost:44331/api/Shop")
+    fetch("http://sndwebapi.spikotech.com/api/Shop")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ shops: data });
       });
   };
   products = () => {
-    fetch("https://localhost:44331/api/product")
+    fetch("http://sndwebapi.spikotech.com/api/product")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ products: data });
       });
   };
-  componentDidUpdate = () => {
-    this.agents();
-    this.shops();
-    this.products();
-  };
+
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
@@ -59,13 +61,22 @@ class AddOrder extends Component {
       (x) => x.product.productId === product.productId
     );
     if (exists) {
-      alert("already added");
+      toast.error("already added");
     } else {
       let orderedProducts = [...this.state.orderedProducts];
       product = { quantity: this.state.quantity, ...product };
-      orderedProducts = [...this.state.orderedProducts, { product }];
+      orderedProducts = [...orderedProducts, { product }];
       this.setState({ orderedProducts });
-      console.log(orderedProducts);
+      let cartProducts = [...this.state.cartProducts];
+      cartProducts = [
+        ...cartProducts,
+        {
+          productId: product.productId,
+          quantity: product.quantity,
+          productPrice: product.productPrice,
+        },
+      ];
+      this.setState({ cartProducts });
     }
   };
   deleteProduct = (id) => {
@@ -73,23 +84,41 @@ class AddOrder extends Component {
       (x) => x.product.productId !== id
     );
     this.setState({ orderedProducts });
+
+    const cartProducts = this.state.cartProducts.filter(
+      (x) => x.productId !== id
+    );
+    this.setState({ cartProducts });
   };
-  doSomething = () => {
+  calculateAmmount = () => {
     const { orderedProducts } = this.state;
-    const totalAmmount = orderedProducts.reduce(
+    const totalAmount = orderedProducts.reduce(
       (accumulator, currentValue) =>
         accumulator +
         currentValue.product.productPrice * currentValue.product.quantity,
       0
     );
 
-    return totalAmmount;
+    return totalAmount;
+  };
+  calculateProfit = () => {
+    const { orderedProducts } = this.state;
+    const totalProfit = orderedProducts.reduce(
+      (accumulator, currentValue) =>
+        accumulator +
+        (currentValue.product.productPrice - currentValue.product.productCost) *
+          currentValue.product.quantity,
+      0
+    );
+
+    return totalProfit;
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Order", {
+    console.log(this.state.orderedProducts);
+
+    fetch("http://sndwebapi.spikotech.com/api/Order", {
       method: "POST",
-      async: true,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -98,19 +127,23 @@ class AddOrder extends Component {
         orderId: null,
         shopId: event.target.shopId.value,
         agentId: event.target.agentId.value,
-        orderedProducts: this.state.orderedProducts,
-        totalAmmount: this.state.totalAmmount,
+        orderedProducts: this.state.cartProducts,
+        totalAmount: this.state.totalAmount,
+        totalProfit: this.state.totalProfit,
       }),
     })
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
+  };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
   };
 
   render() {
@@ -122,20 +155,28 @@ class AddOrder extends Component {
       products: allProducts,
       shops,
       agents,
+      searchQuery,
     } = this.state;
-    const products = paginate(allProducts, currentPage, pageSize);
-    this.state.totalAmmount = this.doSomething();
+    let filtered = allProducts;
+    if (searchQuery)
+      filtered = allProducts.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const products = paginate(filtered, currentPage, pageSize);
+    this.state.totalAmount = this.calculateAmmount();
+    this.state.totalProfit = this.calculateProfit();
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div className="container-fluid mt-5">
           <div className="row mb-5">
             <div className="col-xl-10 col-lg-9 col-md-8 ml-auto">
               <div className="row">
                 <div className="col-xl-1 col-12 mb-4 mb-xl-0"></div>
-                <div className="col-xl-8 col-12 mb-4 mb-xl-0">
-                  <Link className="btn btn-success btn-md" to="/distributions">
-                    Show Distribution
+                <div className="col-xl-10 col-12 mb-4 mb-xl-0">
+                  <Link className="btn btn-success btn-md" to="/order">
+                    Show Orders
                   </Link>
 
                   <form className="mt-5 row" onSubmit={this.handleSubmit}>
@@ -176,6 +217,10 @@ class AddOrder extends Component {
                     </div>
 
                     <div className="col-md-6 col-12 mb-4 mb-xl-0 mt-5">
+                      <SearchBox
+                        value={searchQuery}
+                        onChange={this.handleSearchChange}
+                      />
                       <table className="table table-striped bg-light text-center">
                         <thead>
                           <tr class="text-muted">
@@ -223,6 +268,12 @@ class AddOrder extends Component {
                       />
                     </div>
                     <div className="col-md-6 col-12 mb-4 mb-xl-0 mt-5 bg-">
+                      <h2 className="text-center mb-3">
+                        <strong>Your Cart</strong>
+                        <span className="text-light bg-secondary badge ml-2">
+                          {orderedProducts.length}
+                        </span>
+                      </h2>
                       {orderedProducts.length !== 0 && (
                         <table className="table text-center">
                           <thead>
@@ -264,9 +315,9 @@ class AddOrder extends Component {
                         <>
                           <hr />
                           <div className="row">
-                            <div className="col-sm-6">Total Ammount</div>
+                            <div className="col-sm-6">Total Amount</div>
                             <div className="col-sm-6 text-right font-weight-bold">
-                              ${this.state.totalAmmount}
+                              Rs:{this.state.totalAmount}
                             </div>
                           </div>
                         </>

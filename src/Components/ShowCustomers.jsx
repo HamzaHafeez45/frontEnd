@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditShop from "../Components/EditShop";
+import { toast, ToastContainer } from "react-toastify";
+import EditShop from "./EditShop";
+import SearchBox from "./SearchBox";
 class ShowCustomers extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     customers: [],
     EditCustomerShow: false,
+    searchQuery: "",
   };
   componentWillMount = () => {
-    fetch("https://localhost:44331/api/Shop")
+    fetch("http://sndwebapi.spikotech.com/api/Shop")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ customers: data });
@@ -19,7 +22,7 @@ class ShowCustomers extends Component {
 
   DeleteStudent = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/Shop/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/Shop/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -29,10 +32,10 @@ class ShowCustomers extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -41,22 +44,42 @@ class ShowCustomers extends Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
+  };
   render() {
-    const { shopId, name, shopCnic, shopPhone, name1, name2 } = this.state;
+    const {
+      shopId,
+      name,
+      shopCnic,
+      shopPhone,
+      name1,
+      name2,
+      pageSize,
+      currentPage,
+      customers: allCustomers,
+      searchQuery,
+    } = this.state;
 
     const { length: count } = this.state.customers;
-    const { pageSize, currentPage, customers: allCustomers } = this.state;
-    const Customers = paginate(allCustomers, currentPage, pageSize);
+    let filtered = allCustomers;
+    if (searchQuery)
+      filtered = allCustomers.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Customers = paginate(filtered, currentPage, pageSize);
 
     return (
       <>
-        <table class="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table class="table table-striped bg-light text-center mt-4">
           <thead>
             <tr class="text-muted">
-              <th>Customer ID</th>
-              <th>Customer Name</th>
-              <th>Customer CNIC</th>
-              <th>Customer Phone</th>
+              <th>Id</th>
+              <th>Name</th>
+              <th>CNIC</th>
+              <th>Phone</th>
               <th>City</th>
               <th>Area</th>
               <th>EDIT</th>

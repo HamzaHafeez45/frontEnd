@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class AddRoute extends Component {
   state = {
     cities: [],
@@ -8,7 +10,7 @@ class AddRoute extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Route", {
+    fetch("http://sndwebapi.spikotech.com/api/Route", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -24,10 +26,10 @@ class AddRoute extends Component {
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -36,19 +38,17 @@ class AddRoute extends Component {
     this.refreshList1();
   };
   refreshList = () => {
-    fetch("https://localhost:44331/api/City")
+    fetch("http://sndwebapi.spikotech.com/api/City")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ cities: data });
-        console.log(data);
       });
   };
   refreshList1 = () => {
-    fetch("https://localhost:44331/api/Area")
+    fetch("http://sndwebapi.spikotech.com/api/Area")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ areas: data });
-        console.log(data);
       });
   };
 
@@ -62,6 +62,7 @@ class AddRoute extends Component {
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div class="container-fluid mt-5">
           <div class="row mb-5">
             <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -80,6 +81,7 @@ class AddRoute extends Component {
                         className="form-control border border-dark"
                         placeholder="Enter route Name"
                         required
+                        autoFocus
                       />
                     </div>
                     <div className="form-group mt-2">

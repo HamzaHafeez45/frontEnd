@@ -61,6 +61,15 @@ class Sidenav extends Component {
                       Areas
                     </NavLink>
                   </li>
+                  <li className="dropdown-item">
+                    <NavLink
+                      exact
+                      className="nav-link text-dark sidebar-link"
+                      to="/expenses"
+                    >
+                      Expenses
+                    </NavLink>
+                  </li>
                 </ul>
               </div>
             </li>
@@ -137,7 +146,7 @@ class Sidenav extends Component {
                       className="nav-link text-dark"
                       to="/requestProduct"
                     >
-                      Request Product
+                      Purchased Product
                     </NavLink>
                   </li>
                   <li className="dropdown-item">
@@ -165,6 +174,41 @@ class Sidenav extends Component {
               >
                 Warehouse
               </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                exact
+                className="nav-link text-dark sidebar-link"
+                to="#"
+                data-toggle="collapse"
+                data-target="#togglereport"
+                data-parent="#sidenav01"
+              >
+                Reports<i class="fa fa-caret-down ml-1 mt-1"></i>
+              </NavLink>
+              <div className="collapse" id="togglereport">
+                <ul className="nav nav-list">
+                  <li className="dropdown-item">
+                    <NavLink exact className="nav-link text-dark" to="/product">
+                      1
+                    </NavLink>
+                  </li>
+                  <li className="dropdown-item">
+                    <NavLink
+                      exact
+                      className="nav-link text-dark"
+                      to="/requestProduct"
+                    >
+                      2
+                    </NavLink>
+                  </li>
+                  <li className="dropdown-item">
+                    <NavLink exact className="nav-link text-dark" to="/stock">
+                      3
+                    </NavLink>
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>

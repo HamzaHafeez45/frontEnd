@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class AddProduct extends Component {
   state = {
     brands: [],
-    categories: [],
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Product", {
+    fetch("http://sndwebapi.spikotech.com/api/Product", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -22,51 +23,35 @@ class AddProduct extends Component {
         productPrice: event.target.productPrice.value,
         expireable: event.target.expireable.value,
         brandId: event.target.brandId.value,
-        categoryId: event.target.categoryId.value,
+        productCost: event.target.productCost.value,
+        unit: event.target.unit.value,
       }),
     })
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
 
   componentDidMount = () => {
-    this.Categories();
-    this.Brands();
-  };
-
-  Brands = () => {
-    fetch("https://localhost:44331/api/Brand")
+    fetch("http://sndwebapi.spikotech.com/api/Brand")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ brands: data });
       });
   };
 
-  Categories = () => {
-    fetch("https://localhost:44331/api/Categories")
-      .then((Response) => Response.json())
-      .then((data) => {
-        this.setState({ categories: data });
-      });
-  };
-
-  componentDidUpdate = () => {
-    this.Categories();
-    this.Brands();
-  };
-
   render() {
-    const { brands, categories } = this.state;
+    const { brands } = this.state;
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div class="container-fluid mt-5">
           <div class="row mb-5">
             <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -85,6 +70,7 @@ class AddProduct extends Component {
                         className="form-control border border-dark"
                         placeholder="Enter product name"
                         required
+                        autoFocus
                       />
                     </div>
 
@@ -95,6 +81,16 @@ class AddProduct extends Component {
                         name="productCode"
                         className="form-control border border-dark"
                         placeholder="Enter product code"
+                        required
+                      />
+                    </div>
+                    <div className="form-group mt-2">
+                      <label className="font-weight-bold">Product Cost</label>
+                      <input
+                        type="text"
+                        name="productCost"
+                        className="form-control border border-dark"
+                        placeholder="Enter product Cost"
                         required
                       />
                     </div>
@@ -138,22 +134,15 @@ class AddProduct extends Component {
                       </select>
                     </div>
                     <div className="form-group mt-2">
-                      <label className="font-weight-bold">
-                        Product Category
-                      </label>
-                      <select
-                        class="form-control border border-dark"
-                        name="categoryId"
-                      >
-                        <option>--Select Category--</option>
-                        {categories.map((cat) => (
-                          <option key={cat.categoryId} value={cat.categoryId}>
-                            {cat.name}
-                          </option>
-                        ))}
-                      </select>
+                      <label className="font-weight-bold">Product Unit</label>
+                      <input
+                        type="text"
+                        name="unit"
+                        className="form-control border border-dark"
+                        placeholder="Enter product Unit"
+                        required
+                      />
                     </div>
-
                     <button
                       type="submit"
                       name="add"

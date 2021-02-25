@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditAgent from "../Components/EditAgent";
-
+import EditAgent from "./EditAgent";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
 class ShowAgents extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     agents: [],
     EditAgentShow: false,
+    searchQuery: "",
   };
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/Agent")
+    fetch("http://sndwebapi.spikotech.com/api/Agent")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ agents: data });
@@ -20,7 +22,7 @@ class ShowAgents extends Component {
 
   DeleteAgent = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/Agent/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/Agent/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -30,10 +32,10 @@ class ShowAgents extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -41,6 +43,9 @@ class ShowAgents extends Component {
 
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
+  };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
   };
   render() {
     const {
@@ -52,24 +57,37 @@ class ShowAgents extends Component {
       agentSalary,
       agentPhone,
       DOJ,
+      IEMI,
+      pageSize,
+      currentPage,
+      agents: allAgents,
+      searchQuery,
     } = this.state;
 
     const { length: count } = this.state.agents;
-    const { pageSize, currentPage, agents: allAgents } = this.state;
-    const Agents = paginate(allAgents, currentPage, pageSize);
+
+    let filtered = allAgents;
+    if (searchQuery)
+      filtered = allAgents.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Agents = paginate(filtered, currentPage, pageSize);
     return (
       <>
-        <table class="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table class="table table-striped bg-light text-center w-100 mt-4">
           <thead>
             <tr class="text-muted">
-              <th>AGENT ID</th>
-              <th>Agent Name</th>
-              <th>Agent Type</th>
-              <th>Agent CNIC</th>
-
-              <th>Agent SALARY</th>
-              <th>Agent Phone</th>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Cnic</th>
+              <th>Address</th>
+              <th>Salary</th>
+              <th>Phone</th>
               <th>Date of Joining</th>
+              <th>IEMI</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>
@@ -81,10 +99,11 @@ class ShowAgents extends Component {
                 <td>{agent.name}</td>
                 <td>{agent.agentType}</td>
                 <td>{agent.agentCnic}</td>
-
+                <td>{agent.agentAddress}</td>
                 <td>{agent.agentSalary}</td>
                 <td>{agent.agentPhone}</td>
                 <td>{agent.DOJ}</td>
+                <td>{agent.IEMI}</td>
                 <td>
                   <button
                     className="btn btn-warning btn-sm"
@@ -101,6 +120,7 @@ class ShowAgents extends Component {
                         agentSalary: agent.agentSalary,
                         agentPhone: agent.agentPhone,
                         DOJ: agent.DOJ,
+                        IEMI: agent.IEMI,
                       })
                     }
                   >
@@ -137,6 +157,7 @@ class ShowAgents extends Component {
           agentSalary={agentSalary}
           agentPhone={agentPhone}
           DOJ={DOJ}
+          IEMI={IEMI}
         />
       </>
     );

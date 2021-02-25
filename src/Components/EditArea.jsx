@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class EditArea extends Component {
   state = {
     cities: [],
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Area", {
+    fetch("http://sndwebapi.spikotech.com/api/Area", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -21,16 +22,16 @@ class EditArea extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
 
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/City")
+    fetch("http://sndwebapi.spikotech.com/api/City")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ cities: data });
@@ -41,6 +42,7 @@ class EditArea extends Component {
     const { cities } = this.state;
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editAreaexampleModalCenter"

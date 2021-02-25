@@ -1,18 +1,20 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditRoute from "../Components/EditRoute";
-
+import EditRoute from "./EditRoute";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
 class ShowRoutes extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     routes: [],
     EditRouteShow: false,
+    searchQuery: "",
   };
 
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/Route")
+    fetch("http://sndwebapi.spikotech.com/api/Route")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ routes: data });
@@ -21,7 +23,7 @@ class ShowRoutes extends Component {
 
   DeleteRoute = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/Route/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/Route/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -31,10 +33,10 @@ class ShowRoutes extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -43,25 +45,32 @@ class ShowRoutes extends Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
+  };
   render() {
-    const { routeId, name, name1, name2 } = this.state;
-
+    const { routeId, name, name1, name2, searchQuery } = this.state;
     const { length: count } = this.state.routes;
-
     const { pageSize, currentPage, routes: allRoutes } = this.state;
-
-    const Routes = paginate(allRoutes, currentPage, pageSize);
+    let filtered = allRoutes;
+    if (searchQuery)
+      filtered = allRoutes.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Routes = paginate(filtered, currentPage, pageSize);
     return (
       <>
-        <table class="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table class="table table-striped bg-light text-center mt-4">
           <thead>
             <tr class="text-muted">
-              <th> ROUTE ID</th>
-              <th>ROUTE TITLE</th>
-              <th>CITY</th>
-              <th>AREA</th>
-              <th>EDIT</th>
-              <th>DELETE</th>
+              <th>Id</th>
+              <th>Name</th>
+              <th>City</th>
+              <th>Area</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>

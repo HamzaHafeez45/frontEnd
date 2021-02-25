@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import ShowOrders from "../Components/showOrders";
 class Order extends Component {
   render() {
     return (
@@ -17,6 +18,7 @@ class Order extends Component {
                   Add Order
                 </Link>
                 <h3 className="text-muted text-center mb-3 mt-5">Orders</h3>
+                <ShowOrders />
               </div>
             </div>
           </div>

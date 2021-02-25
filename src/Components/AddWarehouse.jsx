@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class AddWarehouse extends Component {
   state = {
     distributions: [],
@@ -8,7 +10,7 @@ class AddWarehouse extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/warehouse", {
+    fetch("http://sndwebapi.spikotech.com/api/warehouse", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -23,10 +25,10 @@ class AddWarehouse extends Component {
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -35,7 +37,7 @@ class AddWarehouse extends Component {
     this.refreshList();
   };
   refreshList = () => {
-    fetch("https://localhost:44331/api/Distribution")
+    fetch("http://sndwebapi.spikotech.com/api/Distribution")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ distributions: data });
@@ -50,6 +52,7 @@ class AddWarehouse extends Component {
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div className="container-fluid mt-5">
           <div className="row mb-5">
             <div className="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -72,6 +75,7 @@ class AddWarehouse extends Component {
                         className="form-control border border-dark"
                         placeholder="Enter warehouse name"
                         required
+                        autoFocus
                       />
                     </div>
                     <div className="form-group mt-2">

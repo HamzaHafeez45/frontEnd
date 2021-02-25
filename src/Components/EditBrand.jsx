@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class EditBrand extends Component {
+  state = {
+    categories: [],
+  };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Brand", {
+    fetch("http://sndwebapi.spikotech.com/api/Brand", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -12,22 +17,31 @@ class EditBrand extends Component {
       body: JSON.stringify({
         brandId: event.target.brandId.value,
         name: event.target.name.value,
+        categoryId: event.target.name1.value,
       }),
     })
       .then((res) => res.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
-
+  componentDidMount = () => {
+    fetch("http://sndwebapi.spikotech.com/api/Categories")
+      .then((Response) => Response.json())
+      .then((data) => {
+        this.setState({ categories: data });
+      });
+  };
   render() {
+    const { categories } = this.state;
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editBrandexampleModalCenter"
@@ -75,6 +89,24 @@ class EditBrand extends Component {
                         required
                         defaultValue={this.props.name}
                       />
+                    </div>
+                    <div className="form-group mt-2">
+                      <label className="font-weight-bold">Category</label>
+                      <select
+                        class="form-control border border-dark"
+                        name="name1"
+                        defaultValue={this.props.name1}
+                      >
+                        <option>--Select Category--</option>
+                        {categories.map((category) => (
+                          <option
+                            key={category.categoryId}
+                            value={category.categoryId}
+                          >
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                   <button

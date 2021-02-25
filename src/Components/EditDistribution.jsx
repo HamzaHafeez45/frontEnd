@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class EditDistribution extends Component {
   state = {
@@ -7,7 +9,7 @@ class EditDistribution extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Distribution", {
+    fetch("http://sndwebapi.spikotech.com/api/Distribution", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -27,10 +29,10 @@ class EditDistribution extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -40,7 +42,7 @@ class EditDistribution extends Component {
   };
 
   Cities = () => {
-    fetch("https://localhost:44331/api/City")
+    fetch("http://sndwebapi.spikotech.com/api/City")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ cities: data });
@@ -48,7 +50,7 @@ class EditDistribution extends Component {
   };
 
   Categories = () => {
-    fetch("https://localhost:44331/api/Categories")
+    fetch("http://sndwebapi.spikotech.com/api/Categories")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ categories: data });
@@ -59,6 +61,7 @@ class EditDistribution extends Component {
     const { cities, categories } = this.state;
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editDistributionexampleModalCenter"

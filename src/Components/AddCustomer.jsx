@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class AddCustomer extends Component {
   state = {
     cities: [],
@@ -8,7 +10,7 @@ class AddCustomer extends Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Shop", {
+    fetch("http://sndwebapi.spikotech.com/api/Shop", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -26,10 +28,10 @@ class AddCustomer extends Component {
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert("Failed");
+          toast.error("Failed");
         }
       );
   };
@@ -38,14 +40,14 @@ class AddCustomer extends Component {
     this.refreshList1();
   };
   refreshList = () => {
-    fetch("https://localhost:44331/api/City")
+    fetch("http://sndwebapi.spikotech.com/api/City")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ cities: data });
       });
   };
   refreshList1 = () => {
-    fetch("https://localhost:44331/api/Area")
+    fetch("http://sndwebapi.spikotech.com/api/Area")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ areas: data });
@@ -62,6 +64,7 @@ class AddCustomer extends Component {
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div class="container-fluid mt-5">
           <div class="row mb-5">
             <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -84,6 +87,7 @@ class AddCustomer extends Component {
                         className="form-control border border-dark"
                         placeholder="Enter customer name"
                         required
+                        autoFocus
                       />
                     </div>
 

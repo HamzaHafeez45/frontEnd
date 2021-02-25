@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class EditCity extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/City", {
+    fetch("http://sndwebapi.spikotech.com/api/City", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -17,10 +18,10 @@ class EditCity extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -28,6 +29,7 @@ class EditCity extends Component {
   render() {
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editCityexampleModalCenter"

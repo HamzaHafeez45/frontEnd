@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 class AddAgent extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Agent", {
+    fetch("http://sndwebapi.spikotech.com/api/Agent", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -19,15 +21,16 @@ class AddAgent extends Component {
         agentSalary: event.target.agentSalary.value,
         agentPhone: event.target.agentPhone.value,
         DOJ: event.target.DOJ.value,
+        IEMI: event.target.IEMI.value,
       }),
     })
       .then((Response) => Response.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -35,6 +38,7 @@ class AddAgent extends Component {
     return (
       <>
         <Nav />
+        <ToastContainer />
         <div className="container-fluid mt-5">
           <div className="row mb-5">
             <div className="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -53,6 +57,7 @@ class AddAgent extends Component {
                         className="form-control border border-dark"
                         placeholder="Enter agent name"
                         required
+                        autoFocus
                       />
                     </div>
                     <div className="form-group mt-2">
@@ -106,6 +111,18 @@ class AddAgent extends Component {
                         name="agentPhone"
                         className="form-control border border-dark"
                         placeholder="Enter agent phone"
+                        required
+                      />
+                    </div>
+                    <div className="form-group mt-2">
+                      <label className="font-weight-bold">
+                        Agent Phone IEMI
+                      </label>
+                      <input
+                        type="text"
+                        name="IEMI"
+                        className="form-control border border-dark"
+                        placeholder="Enter agent phone IEMI"
                         required
                       />
                     </div>

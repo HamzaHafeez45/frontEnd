@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class EditAgent extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Agent", {
+    fetch("http://sndwebapi.spikotech.com/api/Agent", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -23,16 +25,17 @@ class EditAgent extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
   render() {
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editAgentexampleModalCenter"
@@ -65,6 +68,7 @@ class EditAgent extends Component {
                       name="agentId"
                       className="form-control border border-dark"
                       required
+                      disabled
                       defaultValue={this.props.agentId}
                     />
                   </div>

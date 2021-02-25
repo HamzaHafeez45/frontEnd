@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditReqProduct from "../Components/EditReqProduct";
-
+import EditReqProduct from "./EditReqProduct";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
 class ShowReqProducts extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     products: [],
     EditProductReqShow: false,
+    searchQuery: "",
   };
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/ProductRequest")
+    fetch("http://sndwebapi.spikotech.com/api/ProductRequest")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ products: data });
@@ -20,7 +22,7 @@ class ShowReqProducts extends Component {
 
   DeleteProduct = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/ProductRequest/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/ProductRequest/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -30,10 +32,10 @@ class ShowReqProducts extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -42,29 +44,38 @@ class ShowReqProducts extends Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
+  };
   render() {
     const {
       productRequestId,
       name,
       name1,
-      name2,
       RequestedQuantity,
+      searchQuery,
     } = this.state;
 
     const { length: count } = this.state.products;
     const { pageSize, currentPage, products: allProducts } = this.state;
-    const Products = paginate(allProducts, currentPage, pageSize);
+    let filtered = allProducts;
+    if (searchQuery)
+      filtered = allProducts.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Products = paginate(filtered, currentPage, pageSize);
     return (
       <>
-        <table className="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table className="table table-striped bg-light text-center mt-4">
           <thead>
             <tr class="text-muted">
-              <th>ProductRequest ID</th>
-              <th>Product Name</th>
-              <th>Product Code</th>
-              <th>Product Brand</th>
-              <th>Product Category</th>
-              <th>Request Quantity</th>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Code</th>
+              <th>Brand</th>
+              <th>Quantity</th>
               <th>Price</th>
               <th>Edit</th>
               <th>Delete</th>
@@ -77,7 +88,6 @@ class ShowReqProducts extends Component {
                 <td>{product.name}</td>
                 <td>{product.productCode}</td>
                 <td>{product.name1}</td>
-                <td>{product.name2}</td>
                 <td>{product.requestedQuantity}</td>
                 <td>{product.requestedPrice}</td>
                 <td>
@@ -91,7 +101,6 @@ class ShowReqProducts extends Component {
                         productRequestId: product.productRequestId,
                         name: product.name,
                         name1: product.name1,
-                        name2: product.name2,
                         RequestedQuantity: product.RequestedQuantity,
                       })
                     }
@@ -124,7 +133,6 @@ class ShowReqProducts extends Component {
           productRequestId={productRequestId}
           name={name}
           name1={name1}
-          name2={name2}
           RequestedQuantity={RequestedQuantity}
         />
       </>

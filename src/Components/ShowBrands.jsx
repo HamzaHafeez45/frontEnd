@@ -1,17 +1,20 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditBrand from "../Components/EditBrand";
+import EditBrand from "./EditBrand";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
 class ShowBrands extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     brands: [],
     EditBrandShow: false,
+    searchQuery: "",
   };
 
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/Brand")
+    fetch("http://sndwebapi.spikotech.com/api/Brand")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ brands: data });
@@ -20,7 +23,7 @@ class ShowBrands extends Component {
 
   DeleteBrand = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/Brand/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/Brand/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -30,10 +33,10 @@ class ShowBrands extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -42,21 +45,37 @@ class ShowBrands extends Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
+  };
   render() {
-    const { brandId, name } = this.state;
+    const {
+      brandId,
+      name,
+      name1,
+      pageSize,
+      currentPage,
+      brands: allBrands,
+      searchQuery,
+    } = this.state;
 
     const { length: count } = this.state.brands;
-
-    const { pageSize, currentPage, brands: allBrands } = this.state;
-
-    const Brands = paginate(allBrands, currentPage, pageSize);
+    let filtered = allBrands;
+    if (searchQuery)
+      filtered = allBrands.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Brands = paginate(filtered, currentPage, pageSize);
     return (
       <>
-        <table class="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table class="table table-striped bg-light text-center mt-4">
           <thead>
             <tr class="text-muted">
-              <th>Brand ID</th>
-              <th>Brand Name</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Category</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>
@@ -66,6 +85,7 @@ class ShowBrands extends Component {
               <tr key={brand.brandId}>
                 <td>{brand.brandId}</td>
                 <td>{brand.name}</td>
+                <td>{brand.name1}</td>
                 <td>
                   <button
                     className="btn btn-warning btn-sm"
@@ -76,6 +96,7 @@ class ShowBrands extends Component {
                         EditBrandShow: true,
                         brandId: brand.brandId,
                         name: brand.name,
+                        name1: brand.name1,
                       })
                     }
                   >
@@ -106,6 +127,7 @@ class ShowBrands extends Component {
           onHide={this.EditBrandClose}
           brandId={brandId}
           name={name}
+          name1={name1}
         />
       </>
     );

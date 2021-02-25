@@ -1,17 +1,20 @@
 import React, { Component } from "react";
-import Pagination from "../Components/Pagination";
+import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditWarehouse from "../Components/EditWarehouse";
+import EditWarehouse from "./EditWarehouse";
+import { toast, ToastContainer } from "react-toastify";
+import SearchBox from "./SearchBox";
+
 class ShowWarehouse extends Component {
   state = {
-    pageSize: 4,
+    pageSize: 7,
     currentPage: 1,
     warehouses: [],
     EditWarehouseShow: false,
   };
 
   componentDidMount = () => {
-    fetch("https://localhost:44331/api/warehouse")
+    fetch("http://sndwebapi.spikotech.com/api/warehouse")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ warehouses: data });
@@ -20,7 +23,7 @@ class ShowWarehouse extends Component {
 
   DeleteWarehouse = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("https://localhost:44331/api/warehouse/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/warehouse/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -30,10 +33,10 @@ class ShowWarehouse extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            alert(result);
+            toast(result);
           },
           (error) => {
-            alert(error);
+            toast.error(error);
           }
         );
     }
@@ -42,22 +45,30 @@ class ShowWarehouse extends Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+  handleSearchChange = (query) => {
+    this.setState({ searchQuery: query, currentPage: 1 });
+  };
   render() {
-    const { warehouseId, name, name1 } = this.state;
-
+    const { warehouseId, name, name1, searchQuery } = this.state;
     const { length: count } = this.state.warehouses;
-
     const { pageSize, currentPage, warehouses: allWarehouses } = this.state;
 
-    const Warehouses = paginate(allWarehouses, currentPage, pageSize);
+    let filtered = allWarehouses;
+    if (searchQuery)
+      filtered = allWarehouses.filter((m) =>
+        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    const Warehouses = paginate(filtered, currentPage, pageSize);
     return (
       <>
-        <table class="table table-striped bg-light text-center">
+        <ToastContainer />
+        <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
+        <table class="table table-striped bg-light text-center mt-4">
           <thead>
             <tr class="text-muted">
               <th>WarehouseID</th>
-              <th>Warehouse Name</th>
-              <th>Distribution Name</th>
+              <th>Name</th>
+              <th>Distribution</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>

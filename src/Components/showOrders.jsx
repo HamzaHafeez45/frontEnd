@@ -1,29 +1,28 @@
 import React, { Component } from "react";
 import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditCity from "./EditCity";
 import { toast, ToastContainer } from "react-toastify";
 import SearchBox from "./SearchBox";
-class ShowCities extends Component {
+class ShowOrders extends Component {
   state = {
     pageSize: 7,
     currentPage: 1,
-    cities: [],
-    EditCityShow: false,
+    orders: [],
+    EditOrderShow: false,
     searchQuery: "",
   };
 
   componentDidMount = () => {
-    fetch("http://sndwebapi.spikotech.com/api/City")
+    fetch("http://sndwebapi.spikotech.com/api/Order")
       .then((Response) => Response.json())
       .then((data) => {
-        this.setState({ cities: data });
+        this.setState({ orders: data });
       });
   };
 
-  DeleteCity = (id) => {
+  DeleteOrder = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("http://sndwebapi.spikotech.com/api/City/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/Order/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -49,59 +48,50 @@ class ShowCities extends Component {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
   render() {
+    const { length: count } = this.state.orders;
     const {
-      cityId,
-      name,
       pageSize,
       currentPage,
-      cities: allCities,
+      orders: allOrders,
       searchQuery,
     } = this.state;
-    const { length: count } = this.state.cities;
-    let filtered = allCities;
+    let filtered = allOrders;
     if (searchQuery)
-      filtered = allCities.filter((m) =>
-        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      filtered = allOrders.filter((m) =>
+        m.Shop.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    const Cities = paginate(filtered, currentPage, pageSize);
+    const Orders = paginate(filtered, currentPage, pageSize);
     return (
       <>
         <ToastContainer />
         <SearchBox value={searchQuery} onChange={this.handleSearchChange} />
-        <table class="table table-striped bg-light text-center">
+        <table class="table table-striped bg-light text-center mt-4">
           <thead>
             <tr class="text-muted">
-              <th>Id</th>
-              <th>Name</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th>Order Id</th>
+              <th>Shop</th>
+              <th>Agent</th>
+              <th>Amount</th>
+              <th>Profit</th>
+              <th>Details</th>
+              <th>DELETE</th>
             </tr>
           </thead>
           <tbody>
-            {Cities.map((city) => (
-              <tr key={city.cityId}>
-                <td>{city.cityId}</td>
-                <td>{city.name}</td>
+            {Orders.map((order) => (
+              <tr key={order.orderId}>
+                <td>{order.orderId}</td>
+                <td>{order.Shop}</td>
+                <td>{order.Agent}</td>
+                <td>{order.totalAmount}</td>
+                <td>{order.totalProfit}</td>
                 <td>
-                  <button
-                    className="btn btn-warning btn-sm"
-                    data-toggle="modal"
-                    data-target="#editCityexampleModalCenter"
-                    onClick={() =>
-                      this.setState({
-                        EditDistributionShow: true,
-                        cityId: city.cityId,
-                        name: city.name,
-                      })
-                    }
-                  >
-                    Edit
-                  </button>
+                  <button className="btn btn-warning btn-sm">Detail</button>
                 </td>
                 <td>
                   <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => this.DeleteCity(city.cityId)}
+                    onClick={() => this.DeleteOrder(order.orderId)}
                   >
                     Delete
                   </button>
@@ -116,16 +106,9 @@ class ShowCities extends Component {
           currentPage={currentPage}
           onPageChange={this.handlePageChange}
         />
-
-        <EditCity
-          show={this.state.EditCityShow}
-          onHide={this.EditCityClose}
-          cityId={cityId}
-          name={name}
-        />
       </>
     );
   }
 }
 
-export default ShowCities;
+export default ShowOrders;

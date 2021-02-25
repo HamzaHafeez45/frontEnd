@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class EditReqProduct extends Component {
   state = {
     products: [],
     brands: [],
-    categories: [],
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/ProductRequest", {
+    fetch("http://sndwebapi.spikotech.com/api/ProductRequest", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -18,28 +19,26 @@ class EditReqProduct extends Component {
         productRequestId: event.target.productRequestId.value,
         productId: event.target.name.value,
         brandId: event.target.name1.value,
-        categoryId: event.target.name2.value,
         requestedQuantity: event.target.requestedQuantity.value,
       }),
     })
       .then((res) => res.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
   componentDidMount = () => {
     this.Products();
-    this.Categories();
     this.Brands();
   };
 
   Products = () => {
-    fetch("https://localhost:44331/api/Product")
+    fetch("http://sndwebapi.spikotech.com/api/Product")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ products: data });
@@ -47,25 +46,18 @@ class EditReqProduct extends Component {
   };
 
   Brands = () => {
-    fetch("https://localhost:44331/api/Brand")
+    fetch("http://sndwebapi.spikotech.com/api/Brand")
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ brands: data });
       });
   };
 
-  Categories = () => {
-    fetch("https://localhost:44331/api/Categories")
-      .then((Response) => Response.json())
-      .then((data) => {
-        this.setState({ categories: data });
-      });
-  };
-
   render() {
-    const { products, brands, categories } = this.state;
+    const { products, brands } = this.state;
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editProductReqexampleModalCenter"
@@ -78,7 +70,7 @@ class EditReqProduct extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">
-                  Edit Product Request
+                  Edit Purchased Product
                 </h5>
                 <button
                   type="button"
@@ -134,21 +126,7 @@ class EditReqProduct extends Component {
                       ))}
                     </select>
                   </div>
-                  <div className="form-group mt-2">
-                    <label className="font-weight-bold">Product Category</label>
-                    <select
-                      class="form-control border border-dark"
-                      name="name2"
-                      defaultValue={this.props.name2}
-                    >
-                      <option>--Select Category--</option>
-                      {categories.map((cat) => (
-                        <option key={cat.categoryId} value={cat.categoryId}>
-                          {cat.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Product Quantity</label>
                     <input

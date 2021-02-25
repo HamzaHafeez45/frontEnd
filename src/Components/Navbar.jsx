@@ -6,9 +6,9 @@ const Navbar = (props) => {
     <>
       <div className="container-fluid nav_bg">
         <div className="row">
-          <div className="col-10 mx-auto">
+          <div className="col-md-12">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-              <NavLink exact className="navbar-brand" to="/">
+              <NavLink exact className="navbar-brand px-4" to="/">
                 Managment Studio
               </NavLink>
               <button
@@ -28,27 +28,8 @@ const Navbar = (props) => {
                 id="navbarSupportedContent"
               >
                 <ul className="navbar-nav ml-auto">
-                  
-                  <li className="nav-item">
-                    <NavLink
-                      exact
-                      activeClassName="menu_active"
-                      className="nav-link"
-                      to="/login"
-                    >
-                      Log In
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink
-                      exact
-                      activeClassName="menu_active"
-                      className="nav-link"
-                      to="/Signup"
-                    >
-                      Sign up
-                    </NavLink>
-                  </li>
+                  <li className="nav-item"></li>
+                  <li className="nav-item"></li>
                 </ul>
               </div>
             </nav>

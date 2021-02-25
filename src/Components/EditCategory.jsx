@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 class EditCategory extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/api/Categories", {
+    fetch("http://sndwebapi.spikotech.com/api/categories", {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -17,10 +19,10 @@ class EditCategory extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          alert(result);
+          toast(result);
         },
         (error) => {
-          alert(error);
+          toast.error(error);
         }
       );
   };
@@ -28,6 +30,7 @@ class EditCategory extends Component {
   render() {
     return (
       <>
+        <ToastContainer />
         <div
           class="modal fade"
           id="editCategoryexampleModalCenter"
