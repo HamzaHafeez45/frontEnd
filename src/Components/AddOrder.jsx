@@ -237,6 +237,7 @@ class AddOrder extends Component {
                               <td>{product.productId}</td>
                               <td>{product.name}</td>
                               <td>{product.productPrice}</td>
+                              <td>{product.unit}</td>
                               <td>
                                 <input
                                   className="form-control border border-dark"
@@ -313,7 +314,6 @@ class AddOrder extends Component {
                       )}
                       {orderedProducts.length !== 0 && (
                         <>
-                          <hr />
                           <div className="row">
                             <div className="col-sm-6">Total Amount</div>
                             <div className="col-sm-6 text-right font-weight-bold">

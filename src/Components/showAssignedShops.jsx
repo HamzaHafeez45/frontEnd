@@ -1,27 +1,28 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
 import { toast, ToastContainer } from "react-toastify";
 import SearchBox from "./SearchBox";
-class ShowOrders extends Component {
+class ShowAssignedShop extends Component {
   state = {
     pageSize: 7,
     currentPage: 1,
-    orders: [],
-    EditOrderShow: false,
+    assignedShops: [],
+    EditBrandShow: false,
     searchQuery: "",
   };
 
-  componentDidMount = async () => {
-    const response = await fetch("http://sndwebapi.spikotech.com/api/Order");
-    const orders = await response.json();
-    this.setState({ orders });
+  componentDidMount = () => {
+    fetch("http://sndwebapi.spikotech.com/api/AssignShop")
+      .then((Response) => Response.json())
+      .then((data) => {
+        this.setState({ assignedShops: data });
+      });
   };
 
-  DeleteOrder = (id) => {
+  DeleteBrand = (id) => {
     if (window.confirm("Are you sure?")) {
-      fetch("http://sndwebapi.spikotech.com/api/Order/" + id, {
+      fetch("http://sndwebapi.spikotech.com/api/AssignShop/" + id, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -47,19 +48,20 @@ class ShowOrders extends Component {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
   render() {
-    const { length: count } = this.state.orders;
     const {
       pageSize,
       currentPage,
-      orders: allOrders,
+      assignedShops: allAssignedShops,
       searchQuery,
     } = this.state;
-    let filtered = allOrders;
+
+    const { length: count } = this.state.assignedShops;
+    let filtered = allAssignedShops;
     if (searchQuery)
-      filtered = allOrders.filter((m) =>
-        m.Shop.toLowerCase().startsWith(searchQuery.toLowerCase())
+      filtered = allAssignedShops.filter((m) =>
+        m.Agent.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    const Orders = paginate(filtered, currentPage, pageSize);
+    const AssignedShops = paginate(filtered, currentPage, pageSize);
     return (
       <>
         <ToastContainer />
@@ -67,35 +69,22 @@ class ShowOrders extends Component {
         <table class="table table-striped bg-light text-center mt-4">
           <thead>
             <tr class="text-muted">
-              <th>Order Id</th>
-              <th>Shop</th>
+              <th>ID</th>
               <th>Agent</th>
-              <th>Amount</th>
-              <th>Profit</th>
-              <th>Details</th>
-              <th>DELETE</th>
+              <th>Shop</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
-            {Orders.map((order) => (
-              <tr key={order.orderId}>
-                <td>{order.orderId}</td>
-                <td>{order.Shop}</td>
-                <td>{order.Agent}</td>
-                <td>{order.totalAmount}</td>
-                <td>{order.totalProfit}</td>
-                <td>
-                  <Link
-                    className="btn btn-warning btn-sm"
-                    to={`/details/${order.orderId}`}
-                  >
-                    Details
-                  </Link>
-                </td>
+            {AssignedShops.map((assignShop) => (
+              <tr key={assignShop.assignShopId}>
+                <td>{assignShop.assignShopId}</td>
+                <td>{assignShop.Agent}</td>
+                <td>{assignShop.Shop}</td>
                 <td>
                   <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => this.DeleteOrder(order.orderId)}
+                    onClick={() => this.DeleteBrand(assignShop.assignShopId)}
                   >
                     Delete
                   </button>
@@ -115,4 +104,4 @@ class ShowOrders extends Component {
   }
 }
 
-export default ShowOrders;
+export default ShowAssignedShop;

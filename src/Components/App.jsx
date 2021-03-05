@@ -1,43 +1,47 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import Home from "../Components/Home";
-import Login from "../Components/Login";
-import SignUp from "../Components/Signup";
-import Main from "../Components/Main";
-import Card from "../Components/Card";
+import Home from "./Home";
+import Login from "./Login";
+import SignUp from "./Signup";
+import Main from "./Main";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle";
 import "../../node_modules/react-toastify/dist/ReactToastify.css";
-import Dashboard from "../Components/Dashboard";
-import Distributions from "../Components/Distributions";
-import AddDistributions from "../Components/AddDistribution";
-import Categories from "../Components/Categories";
-import AddCategories from "../Components/AddCategories";
-import AddCity from "../Components/AddCity";
-import Cities from "../Components/Cities";
-import AddRoute from "../Components/AddRoute";
-import Routes from "../Components/Routes";
-import AddArea from "../Components/AddArea";
-import Areas from "../Components/Areas";
-import Customers from "../Components/Customers";
-import AddCustomer from "../Components/AddCustomer";
-import Agents from "../Components/Agents";
-import AddAgent from "../Components/AddAgent";
-import Warehouse from "../Components/Warhouse";
-import AddWarehouse from "../Components/AddWarehouse";
-import AddProduct from "../Components/AddProduct";
-import Product from "../Components/Product";
-import AddReqProduct from "../Components/AddReqProduct";
-import ReqProducts from "../Components/ReqProducts";
-import AddBrand from "../Components/AddBrand";
-import Brand from "../Components/Brand";
-import Stock from "../Components/Stock";
-import AddStock from "../Components/AddStock";
-import Order from "../Components/Order";
-import AddOrder from "../Components/AddOrder";
+import Dashboard from "./Dashboard";
+import Distributions from "./Distributions";
+import AddDistributions from "./AddDistribution";
+import Categories from "./Categories";
+import AddCategories from "./AddCategories";
+import AddCity from "./AddCity";
+import Cities from "./Cities";
+import AddRoute from "./AddRoute";
+import Routes from "./Routes";
+import AddArea from "./AddArea";
+import Areas from "./Areas";
+import Customers from "./Customers";
+import AddCustomer from "./AddCustomer";
+import Agents from "./Agents";
+import AddAgent from "./AddAgent";
+import Warehouse from "./Warhouse";
+import AddWarehouse from "./AddWarehouse";
+import AddProduct from "./AddProduct";
+import Product from "./Product";
+import AddReqProduct from "./AddReqProduct";
+import ReqProducts from "./ReqProducts";
+import AddBrand from "./AddBrand";
+import Brand from "./Brand";
+import Stock from "./Stock";
+import AddStock from "./AddStock";
+import Order from "./Order";
+import AddOrder from "./AddOrder";
 import Expenses from "./Expenses";
 import AddExpenses from "./AddExpenses";
-
+import OrderDetailPage from "./OrderDetailPage";
+import AgentShops from "./AgentShops";
+import AssignShop from "./AssignShop";
+import AssignedShops from "./AssignedShops";
+import AddSalesTarget from "./AddSalesTarget";
+import SalesTarget from "./SalesTarget";
 const App = () => {
   return (
     <>
@@ -75,6 +79,12 @@ const App = () => {
         <Route exact path="/order" component={Order} />
         <Route exact path="/expenses" component={Expenses} />
         <Route exact path="/addExpense" component={AddExpenses} />
+        <Route exact path="/details/:id" component={OrderDetailPage} />
+        <Route exact path="/agentShop" component={AgentShops} />
+        <Route exact path="/assignedShop" component={AssignedShops} />
+        <Route exact path="/assignShop" component={AssignShop} />
+        <Route exact path="/addTarget" component={AddSalesTarget} />
+        <Route exact path="/salesTarget" component={SalesTarget} />
         <Redirect to="/" />
         <Home />
       </Switch>

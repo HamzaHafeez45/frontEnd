@@ -100,6 +100,24 @@ class Sidenav extends Component {
                       Agents
                     </NavLink>
                   </li>
+                  <li className="dropdown-item">
+                    <NavLink
+                      exact
+                      className="nav-link text-dark"
+                      to="/assignedShop"
+                    >
+                      Assigned Shop
+                    </NavLink>
+                  </li>
+                  <li className="dropdown-item">
+                    <NavLink
+                      exact
+                      className="nav-link text-dark"
+                      to="/salesTarget"
+                    >
+                      Agent Sales Target
+                    </NavLink>
+                  </li>
                 </ul>
               </div>
             </li>
