@@ -33,7 +33,15 @@ class ShowSalesTarget extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let salesTargets = this.state.salesTargets.filter(
+                (m) => m.salesTargetId !== id
+              );
+              this.setState({ salesTargets });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

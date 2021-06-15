@@ -130,6 +130,7 @@ class AddOrder extends Component {
         orderedProducts: this.state.cartProducts,
         totalAmount: this.state.totalAmount,
         totalProfit: this.state.totalProfit,
+        orderDate: event.target.orderDate.value,
       }),
     })
       .then((Response) => Response.json())
@@ -199,6 +200,7 @@ class AddOrder extends Component {
                       </div>
                     </div>
                     <div className="col-md-4 col-12 mb-4 mb-xl-0">
+                      {" "}
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">Agent</label>
                         <select
@@ -215,7 +217,17 @@ class AddOrder extends Component {
                         </select>
                       </div>
                     </div>
-
+                    <div className="col-md-4 col-12 mb-4 mb-xl-0">
+                      <div className="form-group mt-2">
+                        <label className="font-weight-bold">Order Date</label>
+                        <input
+                          type="datetime-local"
+                          name="orderDate"
+                          className="form-control border border-dark"
+                          required
+                        />
+                      </div>
+                    </div>
                     <div className="col-md-6 col-12 mb-4 mb-xl-0 mt-5">
                       <SearchBox
                         value={searchQuery}
@@ -224,9 +236,9 @@ class AddOrder extends Component {
                       <table className="table table-striped bg-light text-center">
                         <thead>
                           <tr class="text-muted">
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Price</th>
+                            <th>Unit</th>
                             <th>Quantity</th>
                             <th>Add</th>
                           </tr>
@@ -234,7 +246,6 @@ class AddOrder extends Component {
                         <tbody>
                           {products.map((product) => (
                             <tr key={product.productId}>
-                              <td>{product.productId}</td>
                               <td>{product.name}</td>
                               <td>{product.productPrice}</td>
                               <td>{product.unit}</td>
@@ -328,7 +339,7 @@ class AddOrder extends Component {
                       <button
                         type="submit"
                         name="add-dist"
-                        className="btn btn-primary btn-lg mt-4 btn-register"
+                        className="btn btn-primary px-5 btn-lg mt-4 btn-register"
                       >
                         Add
                       </button>

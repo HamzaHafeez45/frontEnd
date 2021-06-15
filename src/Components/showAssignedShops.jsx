@@ -32,7 +32,15 @@ class ShowAssignedShop extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let assignedShops = this.state.assignedShops.filter(
+                (m) => m.assignedShopId !== id
+              );
+              this.setState({ assignedShops });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

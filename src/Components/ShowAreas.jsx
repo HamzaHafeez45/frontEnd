@@ -32,7 +32,13 @@ class ShowAreas extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let areas = this.state.areas.filter((m) => m.areaId !== id);
+              this.setState({ areas });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

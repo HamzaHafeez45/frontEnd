@@ -33,7 +33,15 @@ class ShowProducts extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let allProducts = this.state.products.filter(
+                (m) => m.productId != id
+              );
+              this.setState({ products: allProducts });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

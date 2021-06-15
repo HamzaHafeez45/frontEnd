@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditReqProduct from "./EditReqProduct";
 import { toast, ToastContainer } from "react-toastify";
 import SearchBox from "./SearchBox";
 class ShowReqProducts extends Component {
@@ -32,7 +31,15 @@ class ShowReqProducts extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let products = this.state.products.filter(
+                (m) => m.productRequestId !== id
+              );
+              this.setState({ products });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);
@@ -49,15 +56,12 @@ class ShowReqProducts extends Component {
   };
   render() {
     const {
-      productRequestId,
-      name,
-      name1,
-      RequestedQuantity,
+      pageSize,
+      currentPage,
+      products: allProducts,
       searchQuery,
     } = this.state;
-
     const { length: count } = this.state.products;
-    const { pageSize, currentPage, products: allProducts } = this.state;
     let filtered = allProducts;
     if (searchQuery)
       filtered = allProducts.filter((m) =>
@@ -77,7 +81,6 @@ class ShowReqProducts extends Component {
               <th>Brand</th>
               <th>Quantity</th>
               <th>Price</th>
-              <th>Edit</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -90,24 +93,6 @@ class ShowReqProducts extends Component {
                 <td>{product.name1}</td>
                 <td>{product.requestedQuantity}</td>
                 <td>{product.requestedPrice}</td>
-                <td>
-                  <button
-                    className="btn btn-warning btn-sm"
-                    data-toggle="modal"
-                    data-target="#editProductReqexampleModalCenter"
-                    onClick={() =>
-                      this.setState({
-                        EditProductReqShow: true,
-                        productRequestId: product.productRequestId,
-                        name: product.name,
-                        name1: product.name1,
-                        RequestedQuantity: product.RequestedQuantity,
-                      })
-                    }
-                  >
-                    Edit
-                  </button>
-                </td>
                 <td>
                   <button
                     className="btn btn-danger btn-sm"
@@ -125,15 +110,6 @@ class ShowReqProducts extends Component {
           pageSize={pageSize}
           currentPage={currentPage}
           onPageChange={this.handlePageChange}
-        />
-
-        <EditReqProduct
-          show={this.state.EditProductReqShow}
-          onHide={this.EditProductReqClose}
-          productRequestId={productRequestId}
-          name={name}
-          name1={name1}
-          RequestedQuantity={RequestedQuantity}
         />
       </>
     );

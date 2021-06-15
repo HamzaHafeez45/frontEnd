@@ -29,7 +29,6 @@ class OrderDetailPage extends Component {
       .then((Response) => Response.json())
       .then((data) => {
         this.setState({ orderedProducts: data });
-        console.log(data);
       });
   };
   render() {

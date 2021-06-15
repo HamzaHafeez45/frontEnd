@@ -33,7 +33,13 @@ class ShowCities extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let cities = this.state.cities.filter((m) => m.cityId !== id);
+              this.setState({ cities });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

@@ -31,7 +31,13 @@ class ShowOrders extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let orders = this.state.orders.filter((m) => m.orderId !== id);
+              this.setState({ orders });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);
@@ -72,6 +78,7 @@ class ShowOrders extends Component {
               <th>Agent</th>
               <th>Amount</th>
               <th>Profit</th>
+              <th>Date</th>
               <th>Details</th>
               <th>DELETE</th>
             </tr>
@@ -84,6 +91,7 @@ class ShowOrders extends Component {
                 <td>{order.Agent}</td>
                 <td>{order.totalAmount}</td>
                 <td>{order.totalProfit}</td>
+                <td>{order.orderDate}</td>
                 <td>
                   <Link
                     className="btn btn-warning btn-sm"

@@ -32,7 +32,13 @@ class ShowAgents extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let agents = this.state.agents.filter((m) => m.agentId !== id);
+              this.setState({ agents });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

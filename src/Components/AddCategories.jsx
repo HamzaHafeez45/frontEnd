@@ -62,7 +62,7 @@ class AddCategories extends Component {
                     <button
                       type="submit"
                       name="add"
-                      className="btn btn-primary  btn-lg mt-4 btn-register"
+                      className="btn btn-primary px-5 btn-lg mt-4 btn-register"
                     >
                       Add
                     </button>

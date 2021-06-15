@@ -22,8 +22,8 @@ class AddDistribution extends Component {
         categoryId: event.target.categoryId.value,
         distributorName: event.target.distributorName.value,
         distributorEmail: event.target.distributorEmail.value,
-        distributorCnic: event.target.distributorCnic.value,
         distributorPhone: event.target.distributorPhone.value,
+        distributorCnic: event.target.distributorCnic.value,
         cityId: event.target.cityId.value,
       }),
     })
@@ -84,52 +84,6 @@ class AddDistribution extends Component {
 
                   <form className="mt-5 row" onSubmit={this.handleSubmit}>
                     <div className="col-md-6 col-12 mb-4 mb-xl-0">
-                      <div className="form-group mt-3">
-                        <label className="font-weight-bold">
-                          Distribution Name
-                        </label>
-                        <input
-                          type="text"
-                          name="name"
-                          className="form-control border border-dark"
-                          placeholder="Enter distribution name"
-                          required
-                          autoFocus
-                        />
-                      </div>
-
-                      <div className="form-group mt-3">
-                        <label className="font-weight-bold">
-                          Distribution Category
-                        </label>
-                        <select
-                          class="form-control border border-dark"
-                          name="categoryId"
-                        >
-                          <option>--Select Category--</option>
-                          {categories.map((cat) => (
-                            <option key={cat.categoryId} value={cat.categoryId}>
-                              {cat.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="form-group mt-3">
-                        <label className="font-weight-bold">City</label>
-                        <select
-                          class="form-control border border-dark"
-                          name="cityId"
-                        >
-                          <option>--Select City--</option>
-                          {cities.map((city) => (
-                            <option key={city.cityId} value={city.cityId}>
-                              {city.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="col-md-6 col-12 mb-4 mb-xl-0">
                       <div className="form-group mt-2 ">
                         <label className="font-weight-bold">
                           Distributor Name (Holder/Owner)
@@ -179,6 +133,53 @@ class AddDistribution extends Component {
                         />
                       </div>
                     </div>
+                    <div className="col-md-6 col-12 mb-4 mb-xl-0">
+                      <div className="form-group mt-2">
+                        <label className="font-weight-bold">
+                          Distribution Name
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          className="form-control border border-dark"
+                          placeholder="Enter distribution name"
+                          required
+                          autoFocus
+                        />
+                      </div>
+
+                      <div className="form-group mt-2">
+                        <label className="font-weight-bold">
+                          Distribution Category
+                        </label>
+                        <select
+                          class="form-control border border-dark"
+                          name="categoryId"
+                        >
+                          <option>--Select Category--</option>
+                          {categories.map((cat) => (
+                            <option key={cat.categoryId} value={cat.categoryId}>
+                              {cat.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="form-group mt-2">
+                        <label className="font-weight-bold">City</label>
+                        <select
+                          class="form-control border border-dark"
+                          name="cityId"
+                        >
+                          <option>--Select City--</option>
+                          {cities.map((city) => (
+                            <option key={city.cityId} value={city.cityId}>
+                              {city.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
                     <div className="col-xl-4 col-12 mb-4 mb-xl-0">
                       <button
                         type="submit"

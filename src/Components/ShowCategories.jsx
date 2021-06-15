@@ -33,7 +33,15 @@ class ShowCategories extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let categories = this.state.categories.filter(
+                (m) => m.categoryId !== id
+              );
+              this.setState({ categories });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

@@ -34,7 +34,13 @@ class ShowRoutes extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let stock = this.state.stock.filter((m) => m.stockId !== id);
+              this.setState({ stock });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

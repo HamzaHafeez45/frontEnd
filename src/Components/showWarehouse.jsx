@@ -33,7 +33,15 @@ class ShowWarehouse extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let allWarehouses = this.state.warehouses.filter(
+                (m) => m.warehouseId !== id
+              );
+              this.setState({ warehouses: allWarehouses });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

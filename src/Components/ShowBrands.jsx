@@ -33,7 +33,13 @@ class ShowBrands extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let brands = this.state.brands.filter((m) => m.brandId !== id);
+              this.setState({ brands });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

@@ -32,7 +32,15 @@ class ShowCustomers extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let customers = this.state.customers.filter(
+                (m) => m.shopId !== id
+              );
+              this.setState({ customers });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);

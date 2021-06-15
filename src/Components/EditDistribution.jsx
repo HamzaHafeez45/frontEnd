@@ -21,8 +21,8 @@ class EditDistribution extends Component {
         categoryId: event.target.name1.value,
         distributorName: event.target.distributorName.value,
         distributorEmail: event.target.distributorEmail.value,
-        distributorCnic: event.target.distributorCnic.value,
         distributorPhone: event.target.distributorPhone.value,
+        distributorCnic: event.target.distributorCnic.value,
         cityId: event.target.name2.value,
       }),
     })
@@ -105,7 +105,7 @@ class EditDistribution extends Component {
                       </label>
                       <input
                         type="text"
-                        name="ame"
+                        name="name"
                         className="form-control border border-dark"
                         placeholder="Enter distribution name"
                         required

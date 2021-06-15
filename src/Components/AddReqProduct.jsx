@@ -21,6 +21,7 @@ class AddReqProduct extends Component {
         productId: event.target.productId.value,
         brandId: event.target.brandId.value,
         requestedQuantity: event.target.requestedQuantity.value,
+        purchaseDate: event.target.purchaseDate.value,
       }),
     })
       .then((Response) => Response.json())
@@ -66,7 +67,7 @@ class AddReqProduct extends Component {
             <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
               <div className="row">
                 <div className="col-xl-1 col-12 mb-4 mb-xl-0"></div>
-                <div class="col-xl-4 col-12 mb-4 ml-5 mb-xl-0">
+                <div class="col-xl-8 col-12 mb-4 mb-xl-0">
                   <Link
                     exact
                     className="btn btn-success btn-md"
@@ -74,58 +75,75 @@ class AddReqProduct extends Component {
                   >
                     Purchased Products
                   </Link>
-                  <form className="mt-5" onSubmit={this.handleSubmit}>
-                    <div className="form-group mt-2">
-                      <label className="font-weight-bold">Product</label>
-                      <select
-                        className="form-control border border-dark"
-                        name="productId"
-                        autoFocus
+                  <form className="mt-5 row" onSubmit={this.handleSubmit}>
+                    <div className="col-md-6 col-12 mb-4 mb-xl-0">
+                      <div className="form-group mt-2">
+                        <label className="font-weight-bold">Product</label>
+                        <select
+                          className="form-control border border-dark"
+                          name="productId"
+                          autoFocus
+                        >
+                          <option>--Select Product--</option>
+                          {products.map((product) => (
+                            <option
+                              key={product.productId}
+                              value={product.productId}
+                            >
+                              {product.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="form-group mt-2">
+                        <label className="font-weight-bold">Brand</label>
+                        <select
+                          className="form-control border border-dark"
+                          name="brandId"
+                        >
+                          <option>--Select Brand--</option>
+                          {brands.map((brand) => (
+                            <option key={brand.brandId} value={brand.brandId}>
+                              {brand.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="col-md-6 col-12 mb-4 mb-xl-0">
+                      <div className="form-group mt-2">
+                        <label className="font-weight-bold">
+                          Product Quantity
+                        </label>
+                        <input
+                          type="text"
+                          name="requestedQuantity"
+                          className="form-control border border-dark"
+                          placeholder="Enter product quantity"
+                          required
+                        />
+                      </div>
+                      <div className="form-group mt-2">
+                        <label className="font-weight-bold">
+                          Date of Joining
+                        </label>
+                        <input
+                          type="datetime-local"
+                          name="purchaseDate"
+                          className="form-control border border-dark"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="col-xl-4 col-12 mb-4 mb-xl-0">
+                      <button
+                        type="submit"
+                        name="add"
+                        className="btn btn-primary btn-lg mt-4 btn-register"
                       >
-                        <option>--Select Product--</option>
-                        {products.map((product) => (
-                          <option
-                            key={product.productId}
-                            value={product.productId}
-                          >
-                            {product.name}
-                          </option>
-                        ))}
-                      </select>
+                        Add
+                      </button>
                     </div>
-                    <div className="form-group mt-2">
-                      <label className="font-weight-bold">Brand</label>
-                      <select
-                        className="form-control border border-dark"
-                        name="brandId"
-                      >
-                        <option>--Select Brand--</option>
-                        {brands.map((brand) => (
-                          <option key={brand.brandId} value={brand.brandId}>
-                            {brand.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="form-group mt-2">
-                      <label className="font-weight-bold">
-                        Product Quantity
-                      </label>
-                      <input
-                        type="text"
-                        name="requestedQuantity"
-                        className="form-control border border-dark"
-                        placeholder="Enter product quantity"
-                        required
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      name="add"
-                      className="btn btn-primary  btn-lg mt-4 btn-register"
-                    >
-                      Add
-                    </button>
                   </form>
                 </div>
               </div>

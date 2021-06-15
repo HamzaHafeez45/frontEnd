@@ -33,7 +33,15 @@ class ShowDistributions extends Component {
         .then((Response) => Response.json())
         .then(
           (result) => {
-            toast(result);
+            if (result === "Deleted Successfully") {
+              let distributions = this.state.distributions.filter(
+                (m) => m.distributionId !== id
+              );
+              this.setState({ distributions });
+              toast(result);
+            } else {
+              toast.error(result);
+            }
           },
           (error) => {
             toast.error(error);
