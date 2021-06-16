@@ -61,7 +61,7 @@ class ShowDistributions extends Component {
       distributionId,
       name,
       categoryName,
-      name2,
+      cityName,
       distributorName,
       distributorEmail,
       distributorCnic,
@@ -105,7 +105,7 @@ class ShowDistributions extends Component {
                 <td>{distribution.distributionId}</td>
                 <td>{distribution.name}</td>
                 <td>{distribution.categoryName}</td>
-                <td>{distribution.name2}</td>
+                <td>{distribution.cityName}</td>
                 <td>{distribution.distributorName}</td>
                 <td>{distribution.distributorEmail}</td>
                 <td>{distribution.distributorCnic}</td>
@@ -121,7 +121,7 @@ class ShowDistributions extends Component {
                         distributionId: distribution.distributionId,
                         name: distribution.name,
                         categoryName: distribution.categoryName,
-                        name2: distribution.name2,
+                        cityName: distribution.cityName,
                         distributorName: distribution.distributorName,
                         distributorEmail: distribution.distributorEmail,
                         distributorCnic: distribution.distributorCnic,
@@ -159,7 +159,7 @@ class ShowDistributions extends Component {
           distributionId={distributionId}
           name={name}
           categoryName={categoryName}
-          name2={name2}
+          cityName={cityName}
           distributorName={distributorName}
           distributorEmail={distributorEmail}
           distributorCnic={distributorCnic}
