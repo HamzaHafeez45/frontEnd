@@ -42,11 +42,7 @@ class SignUp extends Component {
               <div className="col-10 mx-auto">
                 <div className="row">
                   <div className="col-md-6  pt-lg-0 order-2 order-lg-1">
-                    <img
-                      src={desk}
-                      className="img-fluid animated"
-                      alt="home image"
-                    />
+                    <img src={desk} className="img-fluid animated" alt="home" />
                   </div>
                   <div className="col-md-6  pt-lg-0 order-2 order-lg-1">
                     <div className="row">

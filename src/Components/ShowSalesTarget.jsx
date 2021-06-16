@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import EditStock from "./EditStock";
 import { toast, ToastContainer } from "react-toastify";
 import SearchBox from "./SearchBox";
 

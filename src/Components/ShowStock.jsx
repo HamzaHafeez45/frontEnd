@@ -57,7 +57,13 @@ class ShowRoutes extends Component {
   };
 
   render() {
-    const { stockId, name, productQuantity, name1, searchQuery } = this.state;
+    const {
+      stockId,
+      productName,
+      productQuantity,
+      warehouseName,
+      searchQuery,
+    } = this.state;
     const { length: count } = this.state.stock;
     const { pageSize, currentPage, stock: allStock } = this.state;
     let filtered = allStock;
@@ -86,10 +92,10 @@ class ShowRoutes extends Component {
             {Stock.map((st) => (
               <tr key={st.stockId}>
                 <td>{st.stockId}</td>
-                <td>{st.name}</td>
+                <td>{st.productName}</td>
                 <td>{st.productQuantity}</td>
                 <td>{st.stockPrice}</td>
-                <td>{st.name1}</td>
+                <td>{st.warehouseName}</td>
                 <td>
                   <button
                     className="btn btn-warning btn-sm"
@@ -99,9 +105,9 @@ class ShowRoutes extends Component {
                       this.setState({
                         EditStockShow: true,
                         stockId: st.stockId,
-                        name: st.name,
+                        productName: st.productName,
                         productQuantity: st.productQuantity,
-                        name1: st.name1,
+                        warehouseName: st.warehouseName,
                       })
                     }
                   >
@@ -131,9 +137,9 @@ class ShowRoutes extends Component {
           show={this.state.EditStockShow}
           onHide={this.EditStockClose}
           stockId={stockId}
-          name={name}
+          productName={productName}
           productQuantity={productQuantity}
-          name1={name1}
+          warehouseName={warehouseName}
         />
       </>
     );

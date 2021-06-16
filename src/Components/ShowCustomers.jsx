@@ -58,11 +58,11 @@ class ShowCustomers extends Component {
   render() {
     const {
       shopId,
-      name,
+      shopName,
       shopCnic,
       shopPhone,
-      name1,
-      name2,
+      cityName,
+      areaName,
       pageSize,
       currentPage,
       customers: allCustomers,
@@ -101,8 +101,8 @@ class ShowCustomers extends Component {
                 <td>{shop.name}</td>
                 <td>{shop.shopCnic}</td>
                 <td>{shop.shopPhone}</td>
-                <td>{shop.name1}</td>
-                <td>{shop.name2}</td>
+                <td>{shop.cityName}</td>
+                <td>{shop.areaName}</td>
                 <td>
                   <button
                     className="btn btn-warning btn-sm"
@@ -112,11 +112,11 @@ class ShowCustomers extends Component {
                       this.setState({
                         EditCustomerShow: true,
                         shopId: shop.shopId,
-                        name: shop.name,
+                        shopName: shop.shopName,
                         shopCnic: shop.shopCnic,
                         shopPhone: shop.shopPhone,
-                        City_ID: shop.City_ID,
-                        Area_ID: shop.Area_ID,
+                        cityName: shop.cityName,
+                        areaName: shop.areaName,
                       })
                     }
                   >
@@ -146,11 +146,11 @@ class ShowCustomers extends Component {
           show={this.state.EditCustomerShow}
           onHide={this.EditCustomerClose}
           shopId={shopId}
-          name={name}
+          shopName={shopName}
           shopCnic={shopCnic}
           shopPhone={shopPhone}
-          City_ID={name1}
-          Area_ID={name2}
+          cityName={cityName}
+          areaName={areaName}
         />
       </>
     );

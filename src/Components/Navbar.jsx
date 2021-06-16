@@ -28,7 +28,15 @@ const Navbar = (props) => {
                 id="navbarSupportedContent"
               >
                 <ul className="navbar-nav ml-auto">
-                  <li className="nav-item"></li>
+                  <li className="nav-item mx-5">
+                    <NavLink
+                      exact
+                      className="nav-link text-dark px-4"
+                      to="/login"
+                    >
+                      Login
+                    </NavLink>
+                  </li>
                   <li className="nav-item"></li>
                 </ul>
               </div>

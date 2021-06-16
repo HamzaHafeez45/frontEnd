@@ -17,8 +17,8 @@ class EditWarehouse extends Component {
       },
       body: JSON.stringify({
         warehouseId: event.target.warehouseId.value,
-        name: event.target.name.value,
-        distributionId: event.target.name1.value,
+        name: event.target.warehouseName.value,
+        distributionId: event.target.distributionName.value,
       }),
     })
       .then((res) => res.json())
@@ -86,11 +86,11 @@ class EditWarehouse extends Component {
                       <label className="font-weight-bold">Warehouse Name</label>
                       <input
                         type="text"
-                        name="name"
+                        name="warehouseName"
                         className="form-control border border-dark"
                         placeholder="Enter Warehouse name"
                         required
-                        defaultValue={this.props.name}
+                        defaultValue={this.props.warehouseName}
                       />
                     </div>
                     <div className="form-group mt-2">
@@ -99,8 +99,8 @@ class EditWarehouse extends Component {
                       </label>
                       <select
                         className="form-control border border-dark"
-                        name="name1"
-                        defaultValue={this.props.name1}
+                        name="distributionName"
+                        defaultValue={this.props.distributionName}
                       >
                         <option>--Select Category--</option>
                         {distributions.map((dist) => (

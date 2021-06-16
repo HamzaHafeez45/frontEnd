@@ -17,11 +17,11 @@ class EditShop extends Component {
       },
       body: JSON.stringify({
         shopId: event.target.shopId.value,
-        name: event.target.name.value,
+        shopName: event.target.shopName.value,
         shopCnic: event.target.shopCnic.value,
         shopPhone: event.target.shopPhone.value,
-        cityId: event.target.name1.value,
-        areaId: event.target.name2.value,
+        cityId: event.target.cityName.value,
+        areaId: event.target.areaName.value,
       }),
     })
       .then((Response) => Response.json())
@@ -98,10 +98,10 @@ class EditShop extends Component {
                     <label className="font-weight-bold">Shop Name</label>
                     <input
                       type="text"
-                      name="name"
+                      name="shopName"
                       className="form-control border border-dark"
                       required
-                      defaultValue={this.props.name}
+                      defaultValue={this.props.shopName}
                     />
                   </div>
                   <div className="form-group mt-2">
@@ -129,8 +129,8 @@ class EditShop extends Component {
                     <label className="font-weight-bold">City</label>
                     <select
                       class="form-control border border-dark"
-                      name="name1"
-                      defaultValue={this.props.name1}
+                      name="cityName"
+                      defaultValue={this.props.cityName}
                     >
                       <option>--Select City--</option>
                       {cities.map((city) => (
@@ -144,8 +144,8 @@ class EditShop extends Component {
                     <label className="font-weight-bold">Area</label>
                     <select
                       class="form-control border border-dark"
-                      name="name2"
-                      defaultValue={this.props.name2}
+                      name="areaName"
+                      defaultValue={this.props.areaName}
                     >
                       <option>--Select Area--</option>
                       {areas.map((area) => (

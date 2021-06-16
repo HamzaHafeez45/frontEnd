@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
 import SignUp from "./Signup";
-import Main from "./Main";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.bundle";
 import "../../node_modules/react-toastify/dist/ReactToastify.css";
@@ -49,7 +48,6 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/main" component={Main} />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/distributions" component={Distributions} />
         <Route exact path="/addDistributions" component={AddDistributions} />

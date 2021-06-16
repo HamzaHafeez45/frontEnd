@@ -17,11 +17,11 @@ class EditProduct extends Component {
       },
       body: JSON.stringify({
         productId: event.target.productId.value,
-        name: event.target.name.value,
+        name: event.target.productName.value,
         productCode: event.target.productCode.value,
         productPrice: event.target.productPrice.value,
         expireable: event.target.expireable.value,
-        brandId: event.target.name1.value,
+        brandId: event.target.name.value,
         unit: event.target.unit.value,
       }),
     })
@@ -89,11 +89,11 @@ class EditProduct extends Component {
                     <label className="font-weight-bold">Product Name</label>
                     <input
                       type="text"
-                      name="name"
+                      name="productName"
                       className="form-control border border-dark"
                       placeholder="Enter Product name"
                       required
-                      defaultValue={this.props.name}
+                      defaultValue={this.props.productName}
                     />
                   </div>
                   <div className="form-group mt-2">
@@ -136,8 +136,8 @@ class EditProduct extends Component {
                     <label className="font-weight-bold">Brand</label>
                     <select
                       className="form-control border border-dark"
-                      name="name1"
-                      defaultValue={this.props.name1}
+                      name="name"
+                      defaultValue={this.props.name}
                     >
                       <option>--Select Brand--</option>
                       {brands.map((brand) => (

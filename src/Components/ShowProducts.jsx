@@ -35,7 +35,7 @@ class ShowProducts extends Component {
           (result) => {
             if (result === "Deleted Successfully") {
               let allProducts = this.state.products.filter(
-                (m) => m.productId != id
+                (m) => m.productId !== id
               );
               this.setState({ products: allProducts });
               toast(result);
@@ -59,11 +59,11 @@ class ShowProducts extends Component {
   render() {
     const {
       productId,
-      name,
+      productName,
       productCode,
       productPrice,
       expireable,
-      name1,
+      name,
       unit,
       searchQuery,
     } = this.state;
@@ -98,12 +98,12 @@ class ShowProducts extends Component {
             {Products.map((product) => (
               <tr key={product.productId}>
                 <td>{product.productId}</td>
-                <td>{product.name}</td>
+                <td>{product.productName}</td>
                 <td>{product.productCode}</td>
                 <td>{product.productCost}</td>
                 <td>{product.productPrice}</td>
                 <td>{product.expireable}</td>
-                <td>{product.name1}</td>
+                <td>{product.name}</td>
                 <td>{product.unit}</td>
                 <td>
                   <button
@@ -114,11 +114,11 @@ class ShowProducts extends Component {
                       this.setState({
                         EditProducttShow: true,
                         productId: product.productId,
-                        name: product.name,
+                        productName: product.productName,
                         productCode: product.productCode,
                         productPrice: product.productPrice,
                         expireable: product.expireable,
-                        name1: product.name1,
+                        name: product.name,
                         unit: product.unit,
                       })
                     }
@@ -149,11 +149,11 @@ class ShowProducts extends Component {
           show={this.state.EditProducttShow}
           onHide={this.EditProductClose}
           productId={productId}
-          name={name}
+          productName={productName}
           productCode={productCode}
           productPrice={productPrice}
           expireable={expireable}
-          name1={name1}
+          name={name}
           unit={unit}
         />
       </>

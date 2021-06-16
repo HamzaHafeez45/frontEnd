@@ -15,8 +15,8 @@ class EditArea extends Component {
       },
       body: JSON.stringify({
         areaId: event.target.areaId.value,
-        name: event.target.name.value,
-        cityId: event.target.name1.value,
+        name: event.target.areaName.value,
+        cityId: event.target.cityName.value,
       }),
     })
       .then((res) => res.json())
@@ -84,19 +84,19 @@ class EditArea extends Component {
                       <label className="font-weight-bold">Area Name</label>
                       <input
                         type="text"
-                        name="name"
+                        name="areaName"
                         className="form-control border border-dark"
                         placeholder="Enter distribution name"
                         required
-                        defaultValue={this.props.name}
+                        defaultValue={this.props.areaName}
                       />
                     </div>
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">City</label>
                       <select
                         className="form-control border border-dark"
-                        name="name1"
-                        defaultValue={this.props.name1}
+                        name="cityName"
+                        defaultValue={this.props.cityName}
                       >
                         <option>--Select City--</option>
                         {cities.map((city) => (

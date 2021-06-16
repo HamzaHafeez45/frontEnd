@@ -53,11 +53,14 @@ class ShowWarehouse extends Component {
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
+
   handleSearchChange = (query) => {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
+
   render() {
-    const { warehouseId, name, name1, searchQuery } = this.state;
+    const { warehouseId, warehouseName, distributionName, searchQuery } =
+      this.state;
     const { length: count } = this.state.warehouses;
     const { pageSize, currentPage, warehouses: allWarehouses } = this.state;
 
@@ -85,8 +88,8 @@ class ShowWarehouse extends Component {
             {Warehouses.map((warehouse) => (
               <tr key={warehouse.warehouseId}>
                 <td>{warehouse.warehouseId}</td>
-                <td>{warehouse.name}</td>
-                <td>{warehouse.name1}</td>
+                <td>{warehouse.warehouseName}</td>
+                <td>{warehouse.distributionName}</td>
                 <td>
                   <button
                     className="btn btn-warning btn-sm"
@@ -96,8 +99,8 @@ class ShowWarehouse extends Component {
                       this.setState({
                         EditWarehouseShow: true,
                         warehouseId: warehouse.warehouseId,
-                        name: warehouse.name,
-                        name1: warehouse.name1,
+                        warehouseName: warehouse.warehouseName,
+                        distributionName: warehouse.distributionName,
                       })
                     }
                   >
@@ -127,8 +130,8 @@ class ShowWarehouse extends Component {
           show={this.state.EditWarehouseShow}
           onHide={this.EditWarehouseClose}
           warehouseId={warehouseId}
-          name={name}
-          name1={name1}
+          warehouseName={warehouseName}
+          distributionName={distributionName}
         />
       </>
     );

@@ -18,12 +18,12 @@ class EditDistribution extends Component {
       body: JSON.stringify({
         distributionId: event.target.distributionId.value,
         name: event.target.name.value,
-        categoryId: event.target.name1.value,
+        categoryId: event.target.categoryName.value,
         distributorName: event.target.distributorName.value,
         distributorEmail: event.target.distributorEmail.value,
         distributorPhone: event.target.distributorPhone.value,
         distributorCnic: event.target.distributorCnic.value,
-        cityId: event.target.name2.value,
+        cityId: event.target.cityName.value,
       }),
     })
       .then((res) => res.json())
@@ -118,8 +118,8 @@ class EditDistribution extends Component {
                       </label>
                       <select
                         class="form-control border border-dark"
-                        name="name1"
-                        defaultValue={this.props.name1}
+                        name="categoryName"
+                        defaultValue={this.props.categoryName}
                       >
                         <option>--Select Category--</option>
                         {categories.map((cat) => (
@@ -133,8 +133,8 @@ class EditDistribution extends Component {
                       <label className="font-weight-bold">City</label>
                       <select
                         class="form-control border border-dark"
-                        name="name2"
-                        defaultValue={this.props.name2}
+                        name="cityName"
+                        defaultValue={this.props.cityName}
                       >
                         <option>--Select City--</option>
                         {cities.map((city) => (

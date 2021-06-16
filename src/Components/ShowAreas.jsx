@@ -56,8 +56,8 @@ class ShowAreas extends Component {
   render() {
     const {
       areaId,
-      name,
-      name1,
+      areaName,
+      cityName,
       pageSize,
       currentPage,
       areas: allAreas,
@@ -90,8 +90,8 @@ class ShowAreas extends Component {
             {Areas.map((area) => (
               <tr key={area.areaId}>
                 <td>{area.areaId}</td>
-                <td>{area.name}</td>
-                <td>{area.name1}</td>
+                <td>{area.areaName}</td>
+                <td>{area.cityName}</td>
                 <td>
                   <button
                     className="btn btn-warning btn-sm"
@@ -101,8 +101,8 @@ class ShowAreas extends Component {
                       this.setState({
                         EditCategoryShow: true,
                         areaId: area.areaId,
-                        name: area.name,
-                        name1: area.name1,
+                        areaName: area.areaName,
+                        cityName: area.cityName,
                       })
                     }
                   >
@@ -132,8 +132,8 @@ class ShowAreas extends Component {
           show={this.state.EditAreaShow}
           onHide={this.EditAreaClose}
           areaId={areaId}
-          name={name}
-          name1={name1}
+          areaName={areaName}
+          cityName={cityName}
         />
       </>
     );

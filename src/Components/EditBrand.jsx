@@ -16,8 +16,8 @@ class EditBrand extends Component {
       },
       body: JSON.stringify({
         brandId: event.target.brandId.value,
-        name: event.target.name.value,
-        categoryId: event.target.name1.value,
+        name: event.target.productBrandName.value,
+        categoryId: event.target.categoryName.value,
       }),
     })
       .then((res) => res.json())
@@ -83,19 +83,19 @@ class EditBrand extends Component {
                       <label className="font-weight-bold">Brand Name</label>
                       <input
                         type="text"
-                        name="name"
+                        name="productBrandName"
                         className="form-control border border-dark"
                         placeholder="Enter brand name"
                         required
-                        defaultValue={this.props.name}
+                        defaultValue={this.props.productBrandName}
                       />
                     </div>
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">Category</label>
                       <select
                         class="form-control border border-dark"
-                        name="name1"
-                        defaultValue={this.props.name1}
+                        name="categoryName"
+                        defaultValue={this.props.categoryName}
                       >
                         <option>--Select Category--</option>
                         {categories.map((category) => (

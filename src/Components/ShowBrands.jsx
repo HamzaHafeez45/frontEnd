@@ -57,8 +57,8 @@ class ShowBrands extends Component {
   render() {
     const {
       brandId,
-      name,
-      name1,
+      productBrandName,
+      categoryName,
       pageSize,
       currentPage,
       brands: allBrands,
@@ -90,8 +90,8 @@ class ShowBrands extends Component {
             {Brands.map((brand) => (
               <tr key={brand.brandId}>
                 <td>{brand.brandId}</td>
-                <td>{brand.name}</td>
-                <td>{brand.name1}</td>
+                <td>{brand.productBrandName}</td>
+                <td>{brand.categoryName}</td>
                 <td>
                   <button
                     className="btn btn-warning btn-sm"
@@ -101,8 +101,8 @@ class ShowBrands extends Component {
                       this.setState({
                         EditBrandShow: true,
                         brandId: brand.brandId,
-                        name: brand.name,
-                        name1: brand.name1,
+                        productBrandName: brand.productBrandName,
+                        categoryName: brand.categoryName,
                       })
                     }
                   >
@@ -132,8 +132,8 @@ class ShowBrands extends Component {
           show={this.state.EditBrandShow}
           onHide={this.EditBrandClose}
           brandId={brandId}
-          name={name}
-          name1={name1}
+          productBrandName={productBrandName}
+          categoryName={categoryName}
         />
       </>
     );

@@ -124,11 +124,37 @@ class Sidenav extends Component {
             <li className="nav-item">
               <NavLink
                 exact
-                className="nav-link text-dark sidebar-link"
-                to="/customers"
+                className="nav-link collapsed sidebar-link"
+                to="#"
+                data-toggle="collapse"
+                data-target="#toggleShop"
+                data-parent="#sidenav01"
               >
                 Shop
+                <i class="fa fa-caret-down ml-1 mt-1"></i>
               </NavLink>
+              <div className="collapse" id="toggleShop">
+                <ul className="nav nav-list">
+                  <li className="dropdown-item">
+                    <NavLink
+                      exact
+                      className="nav-link text-dark"
+                      to="/customers"
+                    >
+                      Shops
+                    </NavLink>
+                  </li>
+                  <li className="dropdown-item">
+                    <NavLink
+                      exact
+                      className="nav-link text-dark"
+                      to="/customerLocations"
+                    >
+                      Shop Locations
+                    </NavLink>
+                  </li>
+                </ul>
+              </div>
             </li>
 
             <li className="nav-item">

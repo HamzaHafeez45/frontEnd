@@ -60,7 +60,7 @@ class ShowDistributions extends Component {
     const {
       distributionId,
       name,
-      name1,
+      categoryName,
       name2,
       distributorName,
       distributorEmail,
@@ -104,7 +104,7 @@ class ShowDistributions extends Component {
               <tr key={distribution.distributionId}>
                 <td>{distribution.distributionId}</td>
                 <td>{distribution.name}</td>
-                <td>{distribution.name1}</td>
+                <td>{distribution.categoryName}</td>
                 <td>{distribution.name2}</td>
                 <td>{distribution.distributorName}</td>
                 <td>{distribution.distributorEmail}</td>
@@ -120,7 +120,7 @@ class ShowDistributions extends Component {
                         EditDistributionShow: true,
                         distributionId: distribution.distributionId,
                         name: distribution.name,
-                        name1: distribution.name1,
+                        categoryName: distribution.categoryName,
                         name2: distribution.name2,
                         distributorName: distribution.distributorName,
                         distributorEmail: distribution.distributorEmail,
@@ -158,7 +158,7 @@ class ShowDistributions extends Component {
           onHide={this.EditDistributionClose}
           distributionId={distributionId}
           name={name}
-          name1={name1}
+          categoryName={categoryName}
           name2={name2}
           distributorName={distributorName}
           distributorEmail={distributorEmail}

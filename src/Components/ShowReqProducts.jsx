@@ -88,9 +88,9 @@ class ShowReqProducts extends Component {
             {Products.map((product) => (
               <tr key={product.productRequestId}>
                 <td>{product.productRequestId}</td>
-                <td>{product.name}</td>
+                <td>{product.productName}</td>
                 <td>{product.productCode}</td>
-                <td>{product.name1}</td>
+                <td>{product.productBrandName}</td>
                 <td>{product.requestedQuantity}</td>
                 <td>{product.requestedPrice}</td>
                 <td>
