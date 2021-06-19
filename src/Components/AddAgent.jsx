@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Nav from "../Components/Nav";
-import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+
 class AddAgent extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
@@ -64,8 +64,9 @@ class AddAgent extends Component {
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">Agent Type</label>
                         <select
-                          class="form-control border border-dark"
+                          className="form-control border border-dark"
                           name="agentType"
+                          required
                         >
                           <option>--Select AgentType--</option>
                           <option value="SalesMan">SalesMan</option>
@@ -81,6 +82,7 @@ class AddAgent extends Component {
                           name="agentCnic"
                           className="form-control border border-dark"
                           placeholder="Enter agent cnic"
+                          maxlength="15"
                           required
                         />
                       </div>
@@ -101,7 +103,7 @@ class AddAgent extends Component {
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">Agent Salary</label>
                         <input
-                          type="text"
+                          type="number"
                           name="agentSalary"
                           className="form-control border border-dark"
                           placeholder="Enter agent salary"
@@ -112,7 +114,7 @@ class AddAgent extends Component {
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">Agent Phone</label>
                         <input
-                          type="text"
+                          type="tel"
                           name="agentPhone"
                           className="form-control border border-dark"
                           placeholder="Enter agent phone"
@@ -128,6 +130,7 @@ class AddAgent extends Component {
                           name="IEMI"
                           className="form-control border border-dark"
                           placeholder="Enter agent phone IEMI"
+                          maxlength="15"
                           required
                         />
                       </div>

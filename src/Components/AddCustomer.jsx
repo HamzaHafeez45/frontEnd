@@ -103,6 +103,7 @@ class AddCustomer extends Component {
                           name="shopCnic"
                           className="form-control border border-dark"
                           placeholder="Enter customer cnic"
+                          maxlength="15"
                           required
                         />
                       </div>
@@ -111,7 +112,7 @@ class AddCustomer extends Component {
                           Customer Contact
                         </label>
                         <input
-                          type="text"
+                          type="tel"
                           name="shopPhone"
                           className="form-control border border-dark"
                           placeholder="Enter customer contact"
@@ -123,8 +124,9 @@ class AddCustomer extends Component {
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">City</label>
                         <select
-                          class="form-control border border-dark"
+                          className="form-control border border-dark"
                           name="cityId"
+                          required
                         >
                           <option>--Select City--</option>
                           {cities.map((city) => (
@@ -137,13 +139,14 @@ class AddCustomer extends Component {
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">Area</label>
                         <select
-                          class="form-control border border-dark"
+                          className="form-control border border-dark"
                           name="areaId"
+                          required
                         >
                           <option>--Select Area--</option>
                           {areas.map((area) => (
                             <option key={area.areaId} value={area.areaId}>
-                              {area.name}
+                              {area.areaName}
                             </option>
                           ))}
                         </select>

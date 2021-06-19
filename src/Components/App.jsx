@@ -84,7 +84,6 @@ const App = () => {
         <Route exact path="/addTarget" component={AddSalesTarget} />
         <Route exact path="/salesTarget" component={SalesTarget} />
         <Redirect to="/" />
-        <Home />
       </Switch>
     </>
   );

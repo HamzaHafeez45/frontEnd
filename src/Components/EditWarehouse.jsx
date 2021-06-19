@@ -74,7 +74,7 @@ class EditWarehouse extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">Id</label>
                       <input
-                        type="text"
+                        type="number"
                         name="warehouseId"
                         className="form-control border border-dark"
                         required
@@ -100,6 +100,7 @@ class EditWarehouse extends Component {
                       <select
                         className="form-control border border-dark"
                         name="distributionName"
+                        required
                         defaultValue={this.props.distributionName}
                       >
                         <option>--Select Category--</option>

@@ -86,7 +86,7 @@ class EditShop extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Shop ID</label>
                     <input
-                      type="text"
+                      type="number"
                       name="shopId"
                       className="form-control border border-dark"
                       disabled
@@ -107,10 +107,11 @@ class EditShop extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Customer CNIC</label>
                     <input
-                      type="text"
+                      type="number"
                       name="shopCnic"
                       className="form-control border border-dark"
                       required
+                      maxlength="15"
                       defaultValue={this.props.shopCnic}
                     />
                   </div>
@@ -118,7 +119,7 @@ class EditShop extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Shop Phone</label>
                     <input
-                      type="text"
+                      type="tel"
                       name="shopPhone"
                       className="form-control border border-dark"
                       required
@@ -128,8 +129,9 @@ class EditShop extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">City</label>
                     <select
-                      class="form-control border border-dark"
+                      className="form-control border border-dark"
                       name="cityName"
+                      required
                       defaultValue={this.props.cityName}
                     >
                       <option>--Select City--</option>
@@ -143,14 +145,15 @@ class EditShop extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Area</label>
                     <select
-                      class="form-control border border-dark"
+                      className="form-control border border-dark"
                       name="areaName"
+                      required
                       defaultValue={this.props.areaName}
                     >
                       <option>--Select Area--</option>
                       {areas.map((area) => (
                         <option key={area.areaId} value={area.areaId}>
-                          {area.name}
+                          {area.areaName}
                         </option>
                       ))}
                     </select>

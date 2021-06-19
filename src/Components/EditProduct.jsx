@@ -19,6 +19,7 @@ class EditProduct extends Component {
         productId: event.target.productId.value,
         name: event.target.productName.value,
         productCode: event.target.productCode.value,
+        productCost: event.target.productCost.value,
         productPrice: event.target.productPrice.value,
         expireable: event.target.expireable.value,
         brandId: event.target.name.value,
@@ -77,7 +78,7 @@ class EditProduct extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Id</label>
                     <input
-                      type="text"
+                      type="number"
                       name="productId"
                       className="form-control border border-dark"
                       required
@@ -108,9 +109,20 @@ class EditProduct extends Component {
                     />
                   </div>
                   <div className="form-group mt-2">
+                    <label className="font-weight-bold">Product Cost</label>
+                    <input
+                      type="number"
+                      name="productCost"
+                      className="form-control border border-dark"
+                      placeholder="Enter product Cost"
+                      required
+                      defaultValue={this.props.productCost}
+                    />
+                  </div>
+                  <div className="form-group mt-2">
                     <label className="font-weight-bold">Product Price</label>
                     <input
-                      type="text"
+                      type="number"
                       name="productPrice"
                       className="form-control border border-dark"
                       placeholder="Enter Product Price"
@@ -125,6 +137,7 @@ class EditProduct extends Component {
                     <select
                       className="form-control border border-dark"
                       name="expireable"
+                      required
                       defaultValue={this.props.expireable}
                     >
                       <option>--Select Property--</option>
@@ -137,12 +150,13 @@ class EditProduct extends Component {
                     <select
                       className="form-control border border-dark"
                       name="name"
+                      required
                       defaultValue={this.props.name}
                     >
                       <option>--Select Brand--</option>
                       {brands.map((brand) => (
                         <option key={brand.brandId} value={brand.brandId}>
-                          {brand.name}
+                          {brand.productBrandName}
                         </option>
                       ))}
                     </select>

@@ -59,7 +59,7 @@ class EditCity extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">Id</label>
                       <input
-                        type="text"
+                        type="number"
                         name="cityId"
                         className="form-control border border-dark"
                         required

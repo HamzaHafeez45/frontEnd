@@ -87,7 +87,7 @@ class AddProduct extends Component {
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">Product Cost</label>
                         <input
-                          type="text"
+                          type="number"
                           name="productCost"
                           className="form-control border border-dark"
                           placeholder="Enter product Cost"
@@ -99,7 +99,7 @@ class AddProduct extends Component {
                           Product Price
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           name="productPrice"
                           className="form-control border border-dark"
                           placeholder="Enter product price"
@@ -116,6 +116,7 @@ class AddProduct extends Component {
                           className="form-control border border-dark"
                           name="expireable"
                           defaultValue={this.props.expireable}
+                          required
                         >
                           <option>--Select Property--</option>
                           <option value="Yes">Yes</option>
@@ -132,7 +133,7 @@ class AddProduct extends Component {
                           <option>--Select Brand--</option>
                           {brands.map((brand) => (
                             <option key={brand.brandId} value={brand.brandId}>
-                              {brand.name}
+                              {brand.productBrandName}
                             </option>
                           ))}
                         </select>

@@ -16,6 +16,7 @@ class AddExpenses extends Component {
         expenseId: null,
         description: event.target.description.value,
         ammount: event.target.ammount.value,
+        expenseDate: event.target.expenseDate.value,
       }),
     })
       .then((Response) => Response.json())
@@ -57,10 +58,19 @@ class AddExpenses extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">Ammount</label>
                       <input
-                        type="text"
+                        type="number"
                         name="ammount"
                         className="form-control border border-dark"
                         placeholder="Enter Expense Ammount"
+                        required
+                      />
+                    </div>
+                    <div className="form-group mt-2">
+                      <label className="font-weight-bold">Order Date</label>
+                      <input
+                        type="datetime-local"
+                        name="expenseDate"
+                        className="form-control border border-dark"
                         required
                       />
                     </div>

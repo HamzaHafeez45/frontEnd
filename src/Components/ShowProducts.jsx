@@ -61,6 +61,7 @@ class ShowProducts extends Component {
       productId,
       productName,
       productCode,
+      productCost,
       productPrice,
       expireable,
       name,
@@ -116,6 +117,7 @@ class ShowProducts extends Component {
                         productId: product.productId,
                         productName: product.productName,
                         productCode: product.productCode,
+                        productCost: product.productCost,
                         productPrice: product.productPrice,
                         expireable: product.expireable,
                         name: product.name,
@@ -151,6 +153,7 @@ class ShowProducts extends Component {
           productId={productId}
           productName={productName}
           productCode={productCode}
+          productCost={productCost}
           productPrice={productPrice}
           expireable={expireable}
           name={name}

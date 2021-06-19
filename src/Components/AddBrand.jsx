@@ -68,8 +68,9 @@ class AddBrand extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">Category</label>
                       <select
-                        class="form-control border border-dark"
+                        className="form-control border border-dark"
                         name="categoryId"
+                        required
                       >
                         <option>--Select Category--</option>
                         {categories.map((category) => (

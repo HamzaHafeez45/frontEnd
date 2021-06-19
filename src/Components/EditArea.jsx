@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify";
+
 class EditArea extends Component {
   state = {
     cities: [],
@@ -72,7 +73,7 @@ class EditArea extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">Id</label>
                       <input
-                        type="text"
+                        type="number"
                         name="areaId"
                         className="form-control border border-dark"
                         required
@@ -96,6 +97,7 @@ class EditArea extends Component {
                       <select
                         className="form-control border border-dark"
                         name="cityName"
+                        required
                         defaultValue={this.props.cityName}
                       >
                         <option>--Select City--</option>

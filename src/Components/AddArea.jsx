@@ -71,8 +71,9 @@ class AddArea extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">City</label>
                       <select
-                        class="form-control border border-dark"
+                        className="form-control border border-dark"
                         name="cityId"
+                        required
                       >
                         <option>--Select City--</option>
                         {cities.map((city) => (

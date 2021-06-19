@@ -16,9 +16,9 @@ class EditStock extends Component {
       },
       body: JSON.stringify({
         stockId: event.target.stockId.value,
-        productId: event.target.name.Value,
+        productId: event.target.productName.Value,
         productQuantity: event.target.productQuantity.Value,
-        warehouseId: event.target.name1.value,
+        warehouseId: event.target.warehouseName.value,
       }),
     })
       .then((Response) => Response.json())
@@ -85,10 +85,9 @@ class EditStock extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Stock ID</label>
                     <input
-                      type="text"
+                      type="number"
                       name="stockId"
                       className="form-control border border-dark"
-                      placeholder=""
                       required
                       disabled
                       defaultValue={this.props.stockId}
@@ -98,16 +97,16 @@ class EditStock extends Component {
                     <label className="font-weight-bold">Product</label>
                     <select
                       className="form-control border border-dark"
-                      name="name"
-                      defaultValue={this.props.Name}
+                      name="productName"
+                      required
+                      defaultValue={this.props.productName}
                     >
-                      <option>--Select Product--</option>
                       {products.map((product) => (
                         <option
                           key={product.productId}
                           value={product.productId}
                         >
-                          {product.name}
+                          {product.productName}
                         </option>
                       ))}
                     </select>
@@ -115,10 +114,11 @@ class EditStock extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Product Quantity</label>
                     <input
-                      type="text"
+                      type="number"
                       name="productQuantity"
                       className="form-control border border-dark"
                       placeholder="Enter product quantity"
+                      min="1"
                       required
                       defaultValue={this.props.productQuantity}
                     />
@@ -127,16 +127,16 @@ class EditStock extends Component {
                     <label className="font-weight-bold">Warehouse</label>
                     <select
                       className="form-control border border-dark"
-                      name="name1"
-                      defaultValue={this.props.name1}
+                      name="warehouseName"
+                      required
+                      defaultValue={this.props.warehouseName}
                     >
-                      <option>--Select Warehouse--</option>
                       {warehouses.map((warehouse) => (
                         <option
                           key={warehouse.warehouseId}
                           value={warehouse.warehouseId}
                         >
-                          {warehouse.name}
+                          {warehouse.warehouseName}
                         </option>
                       ))}
                     </select>

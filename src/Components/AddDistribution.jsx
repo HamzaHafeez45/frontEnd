@@ -94,6 +94,7 @@ class AddDistribution extends Component {
                           className="form-control border border-dark"
                           placeholder="Enter distributor name"
                           required
+                          autoFocus
                         />
                       </div>
                       <div className="form-group mt-2 ">
@@ -117,6 +118,7 @@ class AddDistribution extends Component {
                           name="distributorCnic"
                           className="form-control border border-dark"
                           placeholder="Enter distributor Cnic"
+                          maxlength="15"
                           required
                         />
                       </div>
@@ -125,7 +127,7 @@ class AddDistribution extends Component {
                           Distributor Phone
                         </label>
                         <input
-                          type="phone"
+                          type="tel"
                           name="distributorPhone"
                           className="form-control border border-dark"
                           placeholder="Enter distributor Phone"
@@ -144,7 +146,6 @@ class AddDistribution extends Component {
                           className="form-control border border-dark"
                           placeholder="Enter distribution name"
                           required
-                          autoFocus
                         />
                       </div>
 
@@ -153,8 +154,9 @@ class AddDistribution extends Component {
                           Distribution Category
                         </label>
                         <select
-                          class="form-control border border-dark"
+                          className="form-control border border-dark"
                           name="categoryId"
+                          required
                         >
                           <option>--Select Category--</option>
                           {categories.map((cat) => (
@@ -167,8 +169,9 @@ class AddDistribution extends Component {
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">City</label>
                         <select
-                          class="form-control border border-dark"
+                          className="form-control border border-dark"
                           name="cityId"
+                          required
                         >
                           <option>--Select City--</option>
                           {cities.map((city) => (

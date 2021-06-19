@@ -71,7 +71,7 @@ class EditBrand extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">Id</label>
                       <input
-                        type="text"
+                        type="number"
                         name="brandId"
                         className="form-control border border-dark"
                         required
@@ -93,8 +93,9 @@ class EditBrand extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">Category</label>
                       <select
-                        class="form-control border border-dark"
+                        className="form-control border border-dark"
                         name="categoryName"
+                        required
                         defaultValue={this.props.categoryName}
                       >
                         <option>--Select Category--</option>

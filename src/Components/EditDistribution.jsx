@@ -91,7 +91,7 @@ class EditDistribution extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">Id</label>
                       <input
-                        type="text"
+                        type="number"
                         name="distributionId"
                         className="form-control border border-dark"
                         required
@@ -117,8 +117,9 @@ class EditDistribution extends Component {
                         Distribution Category
                       </label>
                       <select
-                        class="form-control border border-dark"
+                        className="form-control border border-dark"
                         name="categoryName"
+                        required
                         defaultValue={this.props.categoryName}
                       >
                         <option>--Select Category--</option>
@@ -132,8 +133,9 @@ class EditDistribution extends Component {
                     <div className="form-group mt-2">
                       <label className="font-weight-bold">City</label>
                       <select
-                        class="form-control border border-dark"
+                        className="form-control border border-dark"
                         name="cityName"
+                        required
                         defaultValue={this.props.cityName}
                       >
                         <option>--Select City--</option>
@@ -180,6 +182,7 @@ class EditDistribution extends Component {
                       className="form-control border border-dark"
                       placeholder="Enter distributor Cnic"
                       required
+                      maxlength="15"
                       defaultValue={this.props.distributorCnic}
                     />
                   </div>
@@ -188,7 +191,7 @@ class EditDistribution extends Component {
                       Distributor Phone
                     </label>
                     <input
-                      type="phone"
+                      type="tel"
                       name="distributorPhone"
                       className="form-control border border-dark"
                       placeholder="Enter distributor Phone"

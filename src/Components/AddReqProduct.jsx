@@ -82,6 +82,7 @@ class AddReqProduct extends Component {
                         <select
                           className="form-control border border-dark"
                           name="productId"
+                          required
                           autoFocus
                         >
                           <option>--Select Product--</option>
@@ -90,7 +91,7 @@ class AddReqProduct extends Component {
                               key={product.productId}
                               value={product.productId}
                             >
-                              {product.name}
+                              {product.productName}
                             </option>
                           ))}
                         </select>
@@ -100,11 +101,12 @@ class AddReqProduct extends Component {
                         <select
                           className="form-control border border-dark"
                           name="brandId"
+                          required
                         >
                           <option>--Select Brand--</option>
                           {brands.map((brand) => (
                             <option key={brand.brandId} value={brand.brandId}>
-                              {brand.name}
+                              {brand.productBrandName}
                             </option>
                           ))}
                         </select>
@@ -116,10 +118,11 @@ class AddReqProduct extends Component {
                           Product Quantity
                         </label>
                         <input
-                          type="text"
+                          type="number"
                           name="requestedQuantity"
                           className="form-control border border-dark"
                           placeholder="Enter product quantity"
+                          min="1"
                           required
                         />
                       </div>

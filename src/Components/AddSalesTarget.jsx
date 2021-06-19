@@ -66,8 +66,9 @@ class AddSalesTarget extends Component {
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">Agent</label>
                         <select
-                          class="form-control border border-dark"
+                          className="form-control border border-dark"
                           name="agentId"
+                          required
                         >
                           <option>--Select Agent--</option>
                           {agents.map((agent) => (
@@ -85,7 +86,7 @@ class AddSalesTarget extends Component {
                           type="number"
                           name="targetOrders"
                           className="form-control border border-dark"
-                          placeholder="Enter distributor name"
+                          placeholder="Enter Target Orders"
                           required
                           min="1"
                           max=""

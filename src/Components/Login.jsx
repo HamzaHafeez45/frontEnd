@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import fig from "../imgs/abc.jpg";
 import Navbar from "../Components/Navbar";
+import { login } from "../utils/authentication";
 class Login extends Component {
-  handleReset = () => {
-    this.myFormRef.reset();
-  };
-
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://localhost:44331/token", {
+    fetch("http://sndwebapi.spikotech.com/token", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -22,13 +19,9 @@ class Login extends Component {
       }),
     })
       .then((Response) => Response.json())
-      .then(
-        sessionStorage.setItem("accessToken", Response.access_token),
-        this.props.history.push("/dashboard")
-      )
+      .then(login(Response.access_token), this.props.history.push("/dashboard"))
       .catch((err) => {
         alert(err);
-        this.handleReset();
       });
   };
   render() {

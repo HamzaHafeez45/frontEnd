@@ -86,7 +86,7 @@ class EditReqProduct extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Id</label>
                     <input
-                      type="text"
+                      type="number"
                       name="productRequestId"
                       className="form-control border border-dark"
                       required
@@ -99,6 +99,7 @@ class EditReqProduct extends Component {
                     <select
                       className="form-control border border-dark"
                       name="name"
+                      required
                       defaultValue={this.props.name}
                     >
                       {products.map((product) => (
@@ -106,7 +107,7 @@ class EditReqProduct extends Component {
                           key={product.productId}
                           value={product.productId}
                         >
-                          {product.name}
+                          {product.productName}
                         </option>
                       ))}
                     </select>
@@ -116,12 +117,13 @@ class EditReqProduct extends Component {
                     <select
                       className="form-control border border-dark"
                       name="name1"
+                      required
                       defaultValue={this.props.name1}
                     >
                       <option>--Select Brand--</option>
                       {brands.map((brand) => (
                         <option key={brand.brandId} value={brand.brandId}>
-                          {brand.name}
+                          {brand.productBrandName}
                         </option>
                       ))}
                     </select>

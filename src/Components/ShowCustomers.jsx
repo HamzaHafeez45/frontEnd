@@ -98,7 +98,7 @@ class ShowCustomers extends Component {
             {Customers.map((shop) => (
               <tr key={shop.shopId}>
                 <td>{shop.shopId}</td>
-                <td>{shop.name}</td>
+                <td>{shop.shopName}</td>
                 <td>{shop.shopCnic}</td>
                 <td>{shop.shopPhone}</td>
                 <td>{shop.cityName}</td>

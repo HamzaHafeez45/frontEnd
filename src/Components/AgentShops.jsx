@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import ShopAgent from "./TableShopAgent";
 import Nav from "../Components/Nav";
 class AgentShops extends Component {

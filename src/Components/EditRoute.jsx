@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 class EditRoute extends Component {
   state = {

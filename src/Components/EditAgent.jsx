@@ -64,7 +64,7 @@ class EditAgent extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Agent ID</label>
                     <input
-                      type="text"
+                      type="number"
                       name="agentId"
                       className="form-control border border-dark"
                       required
@@ -85,8 +85,9 @@ class EditAgent extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Agent Type</label>
                     <select
-                      class="form-control border border-dark"
+                      className="form-control border border-dark"
                       name="agentType"
+                      required
                       defaultValue={this.props.agentType}
                     >
                       <option>--Select AgentType--</option>
@@ -103,6 +104,7 @@ class EditAgent extends Component {
                       name="agentCnic"
                       className="form-control border border-dark"
                       required
+                      maxlength="15"
                       defaultValue={this.props.agentCnic}
                     />
                   </div>
@@ -119,7 +121,7 @@ class EditAgent extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Agent Salary</label>
                     <input
-                      type="text"
+                      type="number"
                       name="agentSalary"
                       className="form-control border border-dark"
                       required
@@ -130,7 +132,7 @@ class EditAgent extends Component {
                   <div className="form-group mt-2">
                     <label className="font-weight-bold">Agent Phone</label>
                     <input
-                      type="text"
+                      type="tel"
                       name="agentPhone"
                       className="form-control border border-dark"
                       required

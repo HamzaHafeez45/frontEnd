@@ -185,7 +185,7 @@ class AddOrder extends Component {
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">Customer</label>
                         <select
-                          class="form-control border border-dark"
+                          className="form-control border border-dark"
                           name="shopId"
                           required
                           autoFocus
@@ -193,18 +193,17 @@ class AddOrder extends Component {
                           <option>--Select Customer--</option>
                           {shops.map((shop) => (
                             <option key={shop.shopId} value={shop.shopId}>
-                              {shop.name}
+                              {shop.shopName}
                             </option>
                           ))}
                         </select>
                       </div>
                     </div>
                     <div className="col-md-4 col-12 mb-4 mb-xl-0">
-                      {" "}
                       <div className="form-group mt-2">
                         <label className="font-weight-bold">Agent</label>
                         <select
-                          class="form-control border border-dark"
+                          className="form-control border border-dark"
                           name="agentId"
                           required
                         >

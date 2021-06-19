@@ -85,6 +85,7 @@ class AddWarehouse extends Component {
                       <select
                         className="form-control border border-dark"
                         name="distribution"
+                        required
                       >
                         <option>--Select Category--</option>
                         {distributions.map((dist) => (

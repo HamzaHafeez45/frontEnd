@@ -96,7 +96,7 @@ class AssignShop extends Component {
                         <option>--Select Shop--</option>
                         {shops.map((shop) => (
                           <option key={shop.shopId} value={shop.shopId}>
-                            {shop.name}
+                            {shop.shopName}
                           </option>
                         ))}
                       </select>

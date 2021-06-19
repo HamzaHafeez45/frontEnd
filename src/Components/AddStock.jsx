@@ -72,7 +72,7 @@ class AddStock extends Component {
               <div className="row">
                 <div className="col-xl-1 col-12 mb-4 mb-xl-0"></div>
                 <div class="col-xl-4 col-12 mb-4 ml-5 mb-xl-0">
-                  <Link exact className="btn btn-success btn-md" to="/product">
+                  <Link exact className="btn btn-success btn-md" to="/stock">
                     Show Stock
                   </Link>
                   <form className="mt-5" onSubmit={this.handleSubmit}>
@@ -81,15 +81,15 @@ class AddStock extends Component {
                       <select
                         className="form-control border border-dark"
                         name="productId"
+                        required
                         autoFocus
                       >
-                        <option>--Select Product--</option>
                         {products.map((product) => (
                           <option
                             key={product.productId}
                             value={product.productId}
                           >
-                            {product.name}
+                            {product.productName}
                           </option>
                         ))}
                       </select>
@@ -100,10 +100,11 @@ class AddStock extends Component {
                         Product Quantity
                       </label>
                       <input
-                        type="text"
+                        type="number"
                         name="productQuantity"
                         className="form-control border border-dark"
                         placeholder="Enter product quantity"
+                        min="1"
                         required
                       />
                     </div>
@@ -112,14 +113,14 @@ class AddStock extends Component {
                       <select
                         className="form-control border border-dark"
                         name="warehouseId"
+                        required
                       >
-                        <option>--Select Warehouse--</option>
                         {warehouses.map((warehouse) => (
                           <option
                             key={warehouse.warehouseId}
                             value={warehouse.warehouseId}
                           >
-                            {warehouse.name}
+                            {warehouse.warehouseName}
                           </option>
                         ))}
                       </select>
