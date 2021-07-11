@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import Pagination from "./Pagination";
 import { paginate } from "../utils/Pagination";
-import { toast, ToastContainer } from "react-toastify";
-import EditShop from "./EditShop";
-import SearchBox from "./SearchBox";
+import { toast } from "react-toastify";
+
 class ShowAgentShops extends Component {
   state = {
     pageSize: 7,

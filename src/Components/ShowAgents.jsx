@@ -108,7 +108,7 @@ class ShowAgents extends Component {
                 <td>{agent.agentAddress}</td>
                 <td>{agent.agentSalary}</td>
                 <td>{agent.agentPhone}</td>
-                <td>{agent.DOJ}</td>
+                <td>{agent.DOJ.slice(0, 10)}</td>
                 <td>{agent.IEMI}</td>
                 <td>
                   <button

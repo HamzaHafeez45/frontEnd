@@ -91,7 +91,7 @@ class ShowOrders extends Component {
                 <td>{order.Agent}</td>
                 <td>{order.totalAmount}</td>
                 <td>{order.totalProfit}</td>
-                <td>{order.orderDate}</td>
+                <td>{order.orderDate.slice(0, 10)}</td>
                 <td>
                   <Link
                     className="btn btn-warning btn-sm"

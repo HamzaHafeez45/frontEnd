@@ -8,8 +8,7 @@ class Login extends Component {
     fetch("http://sndwebapi.spikotech.com/token", {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
       },
       body: JSON.stringify({
         id: null,

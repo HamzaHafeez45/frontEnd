@@ -130,7 +130,7 @@ class AddAgent extends Component {
                           name="IEMI"
                           className="form-control border border-dark"
                           placeholder="Enter agent phone IEMI"
-                          maxlength="15"
+                          maxLength="15"
                           required
                         />
                       </div>

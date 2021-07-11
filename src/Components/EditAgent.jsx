@@ -20,6 +20,7 @@ class EditAgent extends Component {
         agentSalary: event.target.agentSalary.value,
         agentPhone: event.target.agentPhone.value,
         DOJ: event.target.DOJ.value,
+        IEMI: event.target.IEMI.value,
       }),
     })
       .then((res) => res.json())
@@ -79,7 +80,7 @@ class EditAgent extends Component {
                       name="name"
                       className="form-control border border-dark"
                       required
-                      defaultValue={this.props.Name}
+                      defaultValue={this.props.name}
                     />
                   </div>
                   <div className="form-group mt-2">
@@ -137,6 +138,17 @@ class EditAgent extends Component {
                       className="form-control border border-dark"
                       required
                       defaultValue={this.props.agentPhone}
+                    />
+                  </div>
+                  <div className="form-group mt-2">
+                    <label className="font-weight-bold">Agent Phone IEMI</label>
+                    <input
+                      type="text"
+                      name="IEMI"
+                      className="form-control border border-dark"
+                      maxLength="15"
+                      required
+                      defaultValue={this.props.IEMI}
                     />
                   </div>
                   <div className="form-group mt-2">

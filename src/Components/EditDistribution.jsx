@@ -63,7 +63,7 @@ class EditDistribution extends Component {
       <>
         <ToastContainer />
         <div
-          class="modal fade"
+          className="modal fade"
           id="editDistributionexampleModalCenter"
           tabindex="-1"
           role="dialog"

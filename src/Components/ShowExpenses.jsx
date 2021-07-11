@@ -48,6 +48,7 @@ class ShowExpenses extends Component {
               <th>ID</th>
               <th>Description</th>
               <th>Ammount</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>
@@ -56,6 +57,7 @@ class ShowExpenses extends Component {
                 <td>{expense.expenseId}</td>
                 <td>{expense.description}</td>
                 <td>{expense.ammount}</td>
+                <td>{expense.expenseDate}</td>
               </tr>
             ))}
           </tbody>

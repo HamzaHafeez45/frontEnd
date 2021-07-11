@@ -1,4 +1,15 @@
 import React, { Component } from "react";
+
+import {
+  Tooltip,
+  BarChart,
+  XAxis,
+  YAxis,
+  Legend,
+  CartesianGrid,
+  Bar,
+} from "recharts";
+
 class Card extends Component {
   state = {
     sales: [],
@@ -8,12 +19,14 @@ class Card extends Component {
     customers: [],
     agents: [],
     profit: 0,
+    orders: [],
   };
   componentDidMount() {
     this.Sales();
     this.Expenses();
     this.Customers();
     this.Agents();
+    this.Orders();
   }
   Expenses() {
     fetch("http://sndwebapi.spikotech.com/api/Expense")
@@ -43,7 +56,13 @@ class Card extends Component {
         this.setState({ agents: data });
       });
   }
-
+  Orders() {
+    fetch("http://sndwebapi.spikotech.com/api/Order")
+      .then((Response) => Response.json())
+      .then((data) => {
+        this.setState({ orders: data });
+      });
+  }
   calculateSales = () => {
     const { sales } = this.state;
     const Sales = sales.reduce(
@@ -72,7 +91,7 @@ class Card extends Component {
     return Profit;
   };
   render() {
-    let { salesAmmount, expensesAmmount, profit } = this.state;
+    let { salesAmmount, expensesAmmount, profit, orders, agents } = this.state;
     salesAmmount = this.calculateSales();
     expensesAmmount = this.calculateExpenses();
     profit = this.calculateProfit();
@@ -84,12 +103,13 @@ class Card extends Component {
         <div className="container-fluid">
           <div className="row">
             <div className="col-xl-10 col-lg-9 col-md-8 ml-auto">
+              <h3 className="text-muted text-center mt-5">Dashboard</h3>
               <div className="row pt-md-5 mt-md-3 mb-5">
                 <div className="col-xl-4 col-sm-6 p-4 ">
                   <div className="card card-common">
                     <div className="card-body">
                       <div className="d-flex justify-content-between">
-                        <i className="far fa-money-bill-alt fa-3x text-success"></i>
+                        <i className="fa fa-money fa-5x" aria-hidden="true"></i>
                         <div className="text-right text-secondary">
                           <h5>Sales</h5>
                           <h3>Rs. {salesAmmount}</h3>
@@ -98,7 +118,7 @@ class Card extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-4 col-sm-6 p-4 ">
+                {/* <div className="col-xl-4 col-sm-6 p-4 ">
                   <div className="card card-common">
                     <div className="card-body">
                       <div className="d-flex justify-content-between">
@@ -110,12 +130,12 @@ class Card extends Component {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="col-xl-4 col-sm-6 p-4 ">
                   <div className="card card-common">
                     <div className="card-body">
                       <div className="d-flex justify-content-between">
-                        <i className="fass fas-users fa-3x text-info"></i>
+                        <i className="fa fa-users fa-5x" aria-hidden="true"></i>
                         <div className="text-right text-secondary">
                           <h5>Customers</h5>
                           <h3>{noOFCustomers}</h3>
@@ -128,7 +148,10 @@ class Card extends Component {
                   <div className="card card-common">
                     <div className="card-body">
                       <div className="d-flex justify-content-between">
-                        <i className="fas fa-chart-line fa-3x text-danger"></i>
+                        <i
+                          className="fa fa-user-secret fa-5x"
+                          aria-hidden="true"
+                        ></i>
                         <div className="text-right text-secondary">
                           <h5>Agents</h5>
                           <h3>{noOFAgents}</h3>
@@ -137,7 +160,7 @@ class Card extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-4 col-sm-6 p-4 ">
+                {/* <div className="col-xl-4 col-sm-6 p-4 ">
                   <div className="card card-common">
                     <div className="card-body">
                       <div className="d-flex justify-content-between">
@@ -149,8 +172,8 @@ class Card extends Component {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="col-xl-4 col-sm-6 p-4 ">
+                </div> */}
+                {/* <div className="col-xl-4 col-sm-6 p-4 ">
                   <div className="card card-common">
                     <div className="card-body">
                       <div className="d-flex justify-content-between">
@@ -162,6 +185,26 @@ class Card extends Component {
                       </div>
                     </div>
                   </div>
+                </div> */}
+                <div className="col-xl-6 col-sm-6 p-4 ">
+                  <BarChart width={470} height={250} data={orders}>
+                    <CartesianGrid />
+                    <XAxis dataKey="Shop" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="totalAmount" fill="#3498db" />
+                  </BarChart>
+                </div>
+                <div className="col-xl-6 col-sm-6 p-4 ">
+                  <BarChart width={470} height={250} data={agents}>
+                    <CartesianGrid />
+                    <XAxis dataKey="agentType" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="agentSalary" fill="#3498db" />
+                  </BarChart>
                 </div>
               </div>
             </div>

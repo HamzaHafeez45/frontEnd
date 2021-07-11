@@ -41,6 +41,7 @@ import AssignShop from "./AssignShop";
 import AssignedShops from "./AssignedShops";
 import AddSalesTarget from "./AddSalesTarget";
 import SalesTarget from "./SalesTarget";
+import CustomerLocation from "./customerLocations";
 const App = () => {
   return (
     <>
@@ -83,6 +84,7 @@ const App = () => {
         <Route exact path="/assignShop" component={AssignShop} />
         <Route exact path="/addTarget" component={AddSalesTarget} />
         <Route exact path="/salesTarget" component={SalesTarget} />
+        <Route exact path="/shopLocations" component={CustomerLocation} />
         <Redirect to="/" />
       </Switch>
     </>

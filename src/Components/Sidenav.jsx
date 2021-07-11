@@ -29,7 +29,7 @@ class Sidenav extends Component {
                 data-parent="#sidenav01"
               >
                 General Managment
-                <i class="fa fa-caret-down ml-1 mt-1"></i>
+                <i className="fa fa-caret-down ml-1 mt-1"></i>
               </NavLink>
               <div className="collapse" id="toggleDemo2">
                 <ul className="nav nav-list">
@@ -91,7 +91,7 @@ class Sidenav extends Component {
                 data-target="#toggleAgent"
                 data-parent="#sidenav01"
               >
-                Agent <i class="fa fa-caret-down ml-1 mt-1"></i>
+                Agent <i className="fa fa-caret-down ml-1 mt-1"></i>
               </NavLink>
               <div className="collapse" id="toggleAgent">
                 <ul className="nav nav-list">
@@ -131,7 +131,7 @@ class Sidenav extends Component {
                 data-parent="#sidenav01"
               >
                 Shop
-                <i class="fa fa-caret-down ml-1 mt-1"></i>
+                <i className="fa fa-caret-down ml-1 mt-1"></i>
               </NavLink>
               <div className="collapse" id="toggleShop">
                 <ul className="nav nav-list">
@@ -148,7 +148,7 @@ class Sidenav extends Component {
                     <NavLink
                       exact
                       className="nav-link text-dark"
-                      to="/customerLocations"
+                      to="/shopLocations"
                     >
                       Shop Locations
                     </NavLink>
@@ -157,7 +157,7 @@ class Sidenav extends Component {
               </div>
             </li>
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <NavLink
                 exact
                 className="nav-link text-dark sidebar-link"
@@ -165,7 +165,7 @@ class Sidenav extends Component {
               >
                 routes
               </NavLink>
-            </li>
+            </li> */}
             <li className="nav-item">
               <NavLink
                 exact
@@ -175,7 +175,7 @@ class Sidenav extends Component {
                 data-target="#toggleInventory"
                 data-parent="#sidenav01"
               >
-                Inventory <i class="fa fa-caret-down ml-1 mt-1"></i>
+                Inventory <i className="fa fa-caret-down ml-1 mt-1"></i>
               </NavLink>
               <div className="collapse" id="toggleInventory">
                 <ul className="nav nav-list">
@@ -219,7 +219,7 @@ class Sidenav extends Component {
                 Warehouse
               </NavLink>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <NavLink
                 exact
                 className="nav-link text-dark sidebar-link"
@@ -253,7 +253,7 @@ class Sidenav extends Component {
                   </li>
                 </ul>
               </div>
-            </li>
+            </li> */}
           </ul>
         </div>
       </>

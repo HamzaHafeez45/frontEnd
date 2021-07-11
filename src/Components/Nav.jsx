@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Topnav from "./Topnav";
 import Sidenav from "./Sidenav";
 class Nav extends Component {
   state = {};

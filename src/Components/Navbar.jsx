@@ -37,6 +37,7 @@ const Navbar = (props) => {
                       Login
                     </NavLink>
                   </li>
+
                   <li className="nav-item"></li>
                 </ul>
               </div>

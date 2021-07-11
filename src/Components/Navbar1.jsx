@@ -29,12 +29,7 @@ const Navbar = (props) => {
               >
                 <ul className="navbar-nav ml-auto">
                   <li className="nav-item">
-                    <NavLink
-                      exact
-                      activeClassName="menu_active"
-                      className="nav-link"
-                      to="/login"
-                    >
+                    <NavLink exac className="nav-link menu_active" to="/login">
                       Log Out
                     </NavLink>
                   </li>

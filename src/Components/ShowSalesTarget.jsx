@@ -90,8 +90,8 @@ class ShowSalesTarget extends Component {
               <tr key={st.salesTargetId}>
                 <td>{st.salesTargetId}</td>
                 <td>{st.Agent}</td>
-                <td>{st.startDate}</td>
-                <td>{st.endDate}</td>
+                <td>{st.startDate.slice(0, 10)}</td>
+                <td>{st.endDate.slice(0, 10)}</td>
                 <td>{st.targetOrders}</td>
                 <td>
                   <button
